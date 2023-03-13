@@ -12,6 +12,8 @@ RUN source /root/.bashrc && PHP_BUILD_INSTALL_EXTENSION="libsodium=1.0.7" phpenv
 RUN source /root/.bashrc && PHP_BUILD_CONFIGURE_OPTS="--with-sodium" phpenv install 8.1.6  && phpenv global 8.1.6  && sed -i 's/memory_limit = 128M/memory_limit = 1024M/' /root/.phpenv/versions/8.1.6/etc/php.ini && php --version
 RUN source /root/.bashrc && PHP_BUILD_CONFIGURE_OPTS="--with-sodium" phpenv install 8.2.2  && phpenv global 8.2.2  && sed -i 's/memory_limit = 128M/memory_limit = 1024M/' /root/.phpenv/versions/8.2.2/etc/php.ini && php --version
 
+RUN sed -i 's/nobody/www-data/' /www-data/.phpenv/versions/8.2.2/etc/php-fpm.d/www.conf && sed -i 's/nobody/www-data/' /www-data/.phpenv/versions/8.1.6/etc/php-fpm.d/www.conf && sed -i 's/nobody/www-data/' /www-data/.phpenv/versions/7.4.29/etc/php-fpm.d/www.conf
+
 RUN source /root/.bashrc && wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --quiet && mv composer.phar /root/.phpenv/bin/composer2 && /root/.phpenv/bin/composer2 self-update --2
 RUN source /root/.bashrc && wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --quiet && mv composer.phar /root/.phpenv/bin/composer22 && /root/.phpenv/bin/composer22 self-update --2 && /root/.phpenv/bin/composer22 self-update --2.2
 
