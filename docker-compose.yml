@@ -1,0 +1,36 @@
+version: '3'
+services:
+  magento:
+    depends_on:
+      - elasticsearch
+      - mysql
+    image: ampco/magento-docker-test-instance:latest
+    platform: linux/amd64
+    container_name: mtest
+    stdin_open: true
+    working_dir: /var/www/html/
+    links:
+      - "mysql:database"
+    ports:
+      - "1234:80"
+    environment:
+      - BASE_DOMAIN=magento.localhost
+      - MYSQL_DATABASE=magento
+      - PHP_VERSION=8.1.6
+      - COMPOSER_VERSION=composer22
+  elasticsearch:
+    container_name: mtest-elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"  # TODO are these ports necessary to be exposed
+      - "9300:9300"
+  mysql:
+    container_name: mtest-mysql
+    image: mysql:5.7.38-debian
+    platform: linux/amd64
+    ports:
+      - "9999:3306"
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
