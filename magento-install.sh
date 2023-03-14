@@ -9,6 +9,7 @@ FULL_INSTALL=${FULL_INSTALL:-0}
 BASE_DOMAIN=${BASE_DOMAIN:-magento.example.com}
 BASE_URL="https://$BASE_DOMAIN"
 MAGE_VERSION=${MAGE_VERSION:-0}
+SEARCH_ENGINE=$(SEARCH_ENGINE:elasticsearch7)
 
 echo "Setting the required version of PHP"
 phpenv global $PHP_VERSION
@@ -69,7 +70,8 @@ if [ "$FULL_INSTALL" -eq "1" ]; then
 
   ELASTICSEARCH_OPTIONS=""
   if curl http://elasticsearch:9200 ; then
-    ELASTICSEARCH_OPTIONS="--elasticsearch-host elasticsearch --elasticsearch-port 9200"
+    ELASTICSEARCH_OPTIONS=" --search-engine=$SEARCH_ENGINE --elasticsearch-host elasticsearch --elasticsearch-port 9200"
+    echo "Using elasticsearch options as $ELASTICSEARCH_OPTIONS"
   fi
 
   php bin/magento setup:install \
