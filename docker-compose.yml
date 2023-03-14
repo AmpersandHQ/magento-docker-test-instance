@@ -7,30 +7,34 @@ services:
     image: ampco/magento-docker-test-instance:latest
     platform: linux/amd64
     container_name: mtest
+    healthcheck:
+      test: [ "CMD", "mysql", "-hdatabase", "-e", "'select 1'" ]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
     stdin_open: true
     working_dir: /var/www/html/
     links:
       - "mysql:database"
     ports:
-      - "1234:80"
+      - "$MAGENTO_PORT:80"
     environment:
-      - BASE_DOMAIN=magento.localhost
+      - SEARCH_ENGINE=$SEARCH_ENGINE
+      - MAGE_VERSION=$MAGE_VERSION
+      - FULL_INSTALL=$FULL_INSTALL
+      - BASE_DOMAIN=$BASE_DOMAIN
       - MYSQL_DATABASE=magento
-      - PHP_VERSION=8.1.6
-      - COMPOSER_VERSION=composer22
+      - PHP_VERSION=$PHP_VERSION
+      - COMPOSER_VERSION=$COMPOSER_VERSION
   elasticsearch:
     container_name: mtest-elasticsearch
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
+    image: $ELASTICSEARCH_VERSION
     environment:
       - discovery.type=single-node
-    ports:
-      - "9200:9200"  # TODO are these ports necessary to be exposed
-      - "9300:9300"
   mysql:
     container_name: mtest-mysql
-    image: mysql:5.7.38-debian
+    image: $MYSQL_VERSION
     platform: linux/amd64
-    ports:
-      - "9999:3306"
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=1
