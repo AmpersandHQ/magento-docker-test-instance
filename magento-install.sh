@@ -9,7 +9,7 @@ FULL_INSTALL=${FULL_INSTALL:-0}
 BASE_DOMAIN=${BASE_DOMAIN:-magento.example.com}
 BASE_URL="https://$BASE_DOMAIN"
 MAGE_VERSION=${MAGE_VERSION:-0}
-SEARCH_ENGINE=$(SEARCH_ENGINE:elasticsearch7)
+SEARCH_ENGINE=${SEARCH_ENGINE:elasticsearch7}
 
 echo "Setting the required version of PHP"
 phpenv global $PHP_VERSION
