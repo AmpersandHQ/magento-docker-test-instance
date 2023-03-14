@@ -8,6 +8,7 @@ COMPOSER_REPOSITORY=${COMPOSER_REPOSITORY:-https://repo-magento-mirror.fooman.co
 FULL_INSTALL=${FULL_INSTALL:-0}
 BASE_DOMAIN=${BASE_DOMAIN:-magento.example.com}
 BASE_URL="https://$BASE_DOMAIN"
+MAGE_VERSION=${MAGE_VERSION:-0}
 
 echo "Setting the required version of PHP"
 phpenv global $PHP_VERSION
@@ -15,7 +16,11 @@ php --version
 ln -f -s /root/.phpenv/bin/$COMPOSER_VERSION /root/.phpenv/bin/composer
 
 echo "Composer - creating project"
-composer create-project --repository=$COMPOSER_REPOSITORY magento/project-community-edition /var/www/html --no-install --no-plugins
+if [ "$MAGE_VERSION" = "0" ]; then
+  composer create-project --repository=$COMPOSER_REPOSITORY magento/project-community-edition /var/www/html --no-install --no-plugins
+else
+  composer create-project --repository=$COMPOSER_REPOSITORY magento/project-community-edition:"$MAGE_VERSION" /var/www/html --no-install --no-plugins
+fi;
 composer config --no-interaction allow-plugins.dealerdirect/phpcodesniffer-composer-installer true || true
 composer config --no-interaction allow-plugins.laminas/laminas-dependency-plugin true || true
 composer config --no-interaction allow-plugins.magento/* true || true
