@@ -5,6 +5,9 @@ services:
       - elasticsearch
       - mysql
     image: ampco/magento-docker-test-instance:latest
+    #build:
+    #  context: ./
+    #  dockerfile: Dockerfile
     platform: linux/amd64
     container_name: mtest
     healthcheck:
@@ -18,12 +21,12 @@ services:
     links:
       - "mysql:database"
     ports:
-      - "$MAGENTO_PORT:80"
+      - "$MAGENTO_PORT:$MAGENTO_PORT"
     environment:
+      - MAGENTO_PORT=$MAGENTO_PORT
       - SEARCH_ENGINE=$SEARCH_ENGINE
       - MAGE_VERSION=$MAGE_VERSION
       - FULL_INSTALL=$FULL_INSTALL
-      - BASE_DOMAIN=$BASE_DOMAIN
       - MYSQL_DATABASE=magento
       - PHP_VERSION=$PHP_VERSION
       - COMPOSER_VERSION=$COMPOSER_VERSION

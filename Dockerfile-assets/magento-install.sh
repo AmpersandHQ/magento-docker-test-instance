@@ -6,7 +6,7 @@ rm -f /var/www/html/*
 
 COMPOSER_REPOSITORY=${COMPOSER_REPOSITORY:-https://repo-magento-mirror.fooman.co.nz/}
 FULL_INSTALL=${FULL_INSTALL:-0}
-BASE_DOMAIN=${BASE_DOMAIN:-0.0.0.0}
+BASE_DOMAIN="0.0.0.0:$MAGENTO_PORT"
 BASE_URL="http://$BASE_DOMAIN"
 MAGE_VERSION=${MAGE_VERSION:-0}
 SEARCH_ENGINE=${SEARCH_ENGINE:-elasticsearch7}
@@ -49,12 +49,14 @@ else
   false
 fi;
 
+# TODO require module here for integration tests if it has been mounted
+
 if [ "$FULL_INSTALL" -eq "1" ]; then
   echo "FULL_INSTALL - Installing magento"
 
   echo "Configuring apache for $BASE_DOMAIN"
   sed \
-  -e "s;%BASE_URL%;$BASE_DOMAIN;g" \
+  -e "s;%MAGENTO_PORT%;$MAGENTO_PORT;g" \
   -e "s;%DOCUMENT_ROOT%;/var/www/html;g" \
   /ampersand/vhost.conf | tee /etc/apache2/sites-enabled/000-default.conf;
 
@@ -84,7 +86,7 @@ if [ "$FULL_INSTALL" -eq "1" ]; then
       --use-rewrites=1 $ELASTICSEARCH_OPTIONS
 
   php bin/magento deploy:mode:set developer
-  php bin/magento setup:upgrade --no-interaction
 
   vendor/bin/n98-magerun2 sys:info
+  vendor/bin/n98-magerun2 config:store:get  web/unsecure/base_url
 fi
