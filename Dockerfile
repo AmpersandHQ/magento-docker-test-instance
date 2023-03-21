@@ -13,6 +13,6 @@ RUN source /root/.bashrc && wget https://raw.githubusercontent.com/composer/getc
 RUN source /root/.bashrc && wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --quiet && mv composer.phar /root/.phpenv/bin/composer22 && /root/.phpenv/bin/composer22 self-update --2 && /root/.phpenv/bin/composer22 self-update --2.2
 
 RUN mkdir -p /ampersand/ /extensions/
-COPY magento-install.sh /ampersand/
-COPY vhost.conf /ampersand/
-COPY command.sh /ampersand/
+COPY Dockerfile-assets/magento-install.sh /ampersand/
+COPY Dockerfile-assets/vhost.conf /ampersand/
+COPY Dockerfile-assets/command.sh /ampersand/
