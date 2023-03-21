@@ -6,8 +6,8 @@ rm -f /var/www/html/*
 
 COMPOSER_REPOSITORY=${COMPOSER_REPOSITORY:-https://repo-magento-mirror.fooman.co.nz/}
 FULL_INSTALL=${FULL_INSTALL:-0}
-BASE_DOMAIN=${BASE_DOMAIN:-magento.example.com}
-BASE_URL="https://$BASE_DOMAIN"
+BASE_DOMAIN=${BASE_DOMAIN:-0.0.0.0}
+BASE_URL="http://$BASE_DOMAIN"
 MAGE_VERSION=${MAGE_VERSION:-0}
 SEARCH_ENGINE=${SEARCH_ENGINE:-elasticsearch7}
 
