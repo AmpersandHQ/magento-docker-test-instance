@@ -10,5 +10,6 @@ list: 					        # Lists all available commands
 docker-start:       # Launch docker container
 	docker compose --file=docker-compose.yml pull
 	docker compose --file=docker-compose.yml down --remove-orphans
+	docker container rm -f mtest-mysql mtest mtest-elasticsearch
 	docker compose --file=docker-compose.yml up --remove-orphans -d magento #--build
 	docker exec -it mtest '/ampersand/magento-install.sh'
