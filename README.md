@@ -7,6 +7,8 @@ For a full installation
 FULL_INSTALL=1 make 2-4-5
 ```
 
+That will allow you to then browse `http://0.0.0.0:1234`
+
 (WIP - currently incomplete) For a partial installation (for unit tests / integration tests)
 ```
 make 2-4-5
