@@ -8,6 +8,6 @@ RUN git clone https://github.com/php-build/php-build /root/.phpenv/plugins/php-b
 RUN echo 'eval "$(phpenv init -)"' >> /root/.bashrc
 ENV PATH="/root/.phpenv/bin:$PATH"
 
-RUN source /root/.bashrc && PHP_BUILD_CONFIGURE_OPTS="--with-freetype" PHP_BUILD_INSTALL_EXTENSION="libsodium=1.0.7" phpenv install 7.4.29 && phpenv global 7.4.29 && sed -i 's/memory_limit = 128M/memory_limit = 1024M/' /root/.phpenv/versions/7.4.29/etc/php.ini && php --version
-RUN source /root/.bashrc && PHP_BUILD_CONFIGURE_OPTS="--with-freetype --with-sodium" phpenv install 8.1.6  && phpenv global 8.1.6  && sed -i 's/memory_limit = 128M/memory_limit = 1024M/' /root/.phpenv/versions/8.1.6/etc/php.ini && php --version
-RUN source /root/.bashrc && PHP_BUILD_CONFIGURE_OPTS="--with-freetype --with-sodium" phpenv install 8.2.2  && phpenv global 8.2.2  && sed -i 's/memory_limit = 128M/memory_limit = 1024M/' /root/.phpenv/versions/8.2.2/etc/php.ini && php --version
+RUN source /root/.bashrc && PHP_BUILD_CONFIGURE_OPTS="--with-freetype" PHP_BUILD_INSTALL_EXTENSION="libsodium=1.0.7" phpenv install 7.4.29 && phpenv global 7.4.29 && sed -i 's/memory_limit = 128M/memory_limit = 4096M/' /root/.phpenv/versions/7.4.29/etc/php.ini && php --version
+RUN source /root/.bashrc && PHP_BUILD_CONFIGURE_OPTS="--with-freetype --with-sodium" phpenv install 8.1.6  && phpenv global 8.1.6  && sed -i 's/memory_limit = 128M/memory_limit = 4096M/' /root/.phpenv/versions/8.1.6/etc/php.ini && php --version
+RUN source /root/.bashrc && PHP_BUILD_CONFIGURE_OPTS="--with-freetype --with-sodium" phpenv install 8.2.2  && phpenv global 8.2.2  && sed -i 's/memory_limit = 128M/memory_limit = 4096M/' /root/.phpenv/versions/8.2.2/etc/php.ini && php --version
