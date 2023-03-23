@@ -1,0 +1,28 @@
+language: php
+
+php:
+  - 7.2
+
+services:
+  - docker
+
+env:
+  - TEST_GROUP=2-3-7
+  - TEST_GROUP=2-4-5
+  - TEST_GROUP=2-latest
+
+before_install:
+  - travis_retry wget https://github.com/docker/compose/releases/download/v2.17.0/docker-compose-linux-x86_64
+  - sudo mv docker-compose-linux-x86_64 /usr/libexec/docker/cli-plugins/docker-compose
+  - sudo chmod +x /usr/libexec/docker/cli-plugins/docker-compose
+  - docker --version && docker compose version
+
+script:
+  - FULL_INSTALL=1 make $TEST_GROUP
+  - curl --head http://0.0.0.0:1234
+
+after_failure:
+  - docker exec mtest '/ampersand/command.sh' 'cat /var/www/html/var/log/*.log'
+  - docker exec mtest '/ampersand/command.sh' 'cat /var/log/apache2/error.log'
+  - docker exec mtest '/ampersand/command.sh' 'cat /var/log/apache2/access.log'
+  - sleep 10
