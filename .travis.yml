@@ -13,6 +13,7 @@ before_install:
   - docker --version && docker compose version
 
 script:
+  - shellcheck Dockerfile-assets/*.sh
   - FULL_INSTALL=1 make $TEST_GROUP
   - docker exec mtest '/ampersand/command.sh' 'php bin/magento'
   - curl --head http://0.0.0.0:1234

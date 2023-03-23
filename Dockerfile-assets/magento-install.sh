@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck source=/dev/null
 source /root/.bashrc
 set -euo pipefail
 cd /var/www/html
@@ -12,21 +13,21 @@ MAGE_VERSION=${MAGE_VERSION:-0}
 ELASTICSEARCH_OPTIONS=${ELASTICSEARCH_OPTIONS:-}
 
 echo "Setting the required version of PHP"
-phpenv global $PHP_VERSION
+phpenv global "$PHP_VERSION"
 php --version
-ln -f -s /root/.phpenv/bin/$COMPOSER_VERSION /root/.phpenv/bin/composer
+ln -f -s /root/.phpenv/bin/"$COMPOSER_VERSION" /root/.phpenv/bin/composer
 
 echo "Composer - creating project"
 if [ "$MAGE_VERSION" = "0" ]; then
-  composer create-project --repository=$COMPOSER_REPOSITORY magento/project-community-edition /var/www/html --no-install --no-plugins
+  composer create-project --repository="$COMPOSER_REPOSITORY" magento/project-community-edition /var/www/html --no-install --no-plugins
 else
-  composer create-project --repository=$COMPOSER_REPOSITORY magento/project-community-edition:"$MAGE_VERSION" /var/www/html --no-install --no-plugins
+  composer create-project --repository="$COMPOSER_REPOSITORY" magento/project-community-edition:"$MAGE_VERSION" /var/www/html --no-install --no-plugins
 fi;
 composer config --no-interaction allow-plugins.dealerdirect/phpcodesniffer-composer-installer true || true
 composer config --no-interaction allow-plugins.laminas/laminas-dependency-plugin true || true
 composer config --no-interaction allow-plugins.magento/* true || true
 composer config --unset repo.0
-composer config repo.composerrepository composer $COMPOSER_REPOSITORY
+composer config repo.composerrepository composer "$COMPOSER_REPOSITORY"
 composer config minimum-stability dev
 composer config prefer-stable true
 
@@ -66,18 +67,18 @@ if [ "$FULL_INSTALL" -eq "1" ]; then
   apachectl restart
 
   echo "Starting php-fpm"
-  /root/.phpenv/versions/$PHP_VERSION/etc/init.d/php-fpm restart
+  /root/.phpenv/versions/"$PHP_VERSION"/etc/init.d/php-fpm restart
 
   mysql -hdatabase -uroot -e "create database if not exists $MYSQL_DATABASE"
 
   php bin/magento setup:install \
       --admin-firstname=ampersand --admin-lastname=developer --admin-email=example@example.com \
       --admin-user=admin --admin-password=somepassword123 \
-      --db-name=$MYSQL_DATABASE --db-user=root --db-host=database\
+      --db-name="$MYSQL_DATABASE" --db-user=root --db-host=database\
       --backend-frontname=admin \
-      --base-url=$BASE_URL \
+      --base-url="$BASE_URL" \
       --language=en_GB --currency=GBP --timezone=Europe/London \
-      --use-rewrites=1 $ELASTICSEARCH_OPTIONS
+      --use-rewrites=1 "$ELASTICSEARCH_OPTIONS"
 
   php bin/magento deploy:mode:set developer
 
