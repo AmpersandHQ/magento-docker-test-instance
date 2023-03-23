@@ -31,7 +31,8 @@ composer config repo.composerrepository composer "$COMPOSER_REPOSITORY"
 composer config minimum-stability dev
 composer config prefer-stable true
 
-echo "Composer - requiring n98/magerun2"
+echo "Composer - requiring n98/magerun2 and markshust/magento2-module-disabletwofactorauth"
+composer require markshust/magento2-module-disabletwofactorauth:"*" --no-interaction --no-update
 composer require n98/magerun2:"*" --dev --no-interaction --no-update
 
 echo "Composer - installation"
