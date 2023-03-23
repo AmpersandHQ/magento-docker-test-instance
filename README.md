@@ -15,7 +15,7 @@ make 2-4-5
 ## Execute commands inside the docker container
 
 ```
-docker exec -it mtest '/ampersand/command.sh' 'vendor/bin/n98-magerun2 config:store:set test/some/config 123'
+docker exec mtest '/ampersand/command.sh' 'vendor/bin/n98-magerun2 config:store:set test/some/config 123'
 ```
 
 # TODO

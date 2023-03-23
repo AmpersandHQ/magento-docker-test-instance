@@ -34,7 +34,7 @@ echo "Composer - requiring additional dependencies"
 composer require ampersand/replace-magento-composer-dependency-version-audit-plugin:"*" --no-interaction --no-update
 composer require n98/magerun2:"*" --dev --no-interaction --no-update
 
-# 2.4.2 support
+# 2.4.2 support TODO see if actually required?
 if [[ $PHP_VERSION == 7* ]]; then
   composer require laminas/laminas-dependency-plugin:"<2.5.0" --no-interaction --no-update
 fi
