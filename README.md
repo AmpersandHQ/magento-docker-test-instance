@@ -1,5 +1,7 @@
 # magento-docker-test-instance
 
+[![Build Status](https://app.travis-ci.com/AmpersandHQ/magento-docker-test-instance.svg?branch=master)](https://app.travis-ci.com/AmpersandHQ/magento-docker-test-instance)
+
 ## Installation
 
 For a full installation
