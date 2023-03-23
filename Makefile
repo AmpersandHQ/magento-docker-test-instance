@@ -1,5 +1,5 @@
 list: 					        # Lists all available commands
-	printf "\n"; grep -v -e "^\t" Makefile | grep . | grep -v ENV | awk -F":.+?#" '{ print $$1 " #" $$2 }' | column -t -s '#';
+	printf "\n"; grep -v -e "^\t" Makefile | grep . | grep -Ev 'list|docker-start|ENV' | awk -F":.+?#" '{ print $$1 " #" $$2 }' | column -t -s '#';
 
 2-3-7:			 # Launch 2.3.7
 	MAGE_VERSION="2.3.7" PHP_VERSION='7.4.29' COMPOSER_VERSION='composer22' MYSQL_VERSION="mysql:5.7.41-debian" ELASTICSEARCH_VERSION='docker.elastic.co/elasticsearch/elasticsearch:7.9.0' ELASTICSEARCH_OPTIONS='' MAGENTO_PORT=1234 make docker-start

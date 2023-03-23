@@ -71,6 +71,8 @@ if [ "$FULL_INSTALL" -eq "1" ]; then
 
   mysql -hdatabase -uroot -e "create database if not exists $MYSQL_DATABASE"
 
+  # allow splitting for `$ELASTICSEARCH_OPTIONS`
+  # shellcheck disable=SC2086
   php bin/magento setup:install \
       --admin-firstname=ampersand --admin-lastname=developer --admin-email=example@example.com \
       --admin-user=admin --admin-password=somepassword123 \
@@ -78,7 +80,7 @@ if [ "$FULL_INSTALL" -eq "1" ]; then
       --backend-frontname=admin \
       --base-url="$BASE_URL" \
       --language=en_GB --currency=GBP --timezone=Europe/London \
-      --use-rewrites=1 "$ELASTICSEARCH_OPTIONS"
+      --use-rewrites=1 $ELASTICSEARCH_OPTIONS
 
   php bin/magento deploy:mode:set developer
 

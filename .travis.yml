@@ -17,7 +17,7 @@ script:
   - shellcheck Dockerfile-assets/*.sh
   - FULL_INSTALL=1 make $TEST_GROUP
   - docker exec mtest '/ampersand/command.sh' 'php bin/magento'
-  - curl --head http://0.0.0.0:1234
+  - curl --head http://0.0.0.0:1234 | grep 200
 
 after_failure:
   - docker exec mtest '/ampersand/command.sh' 'cat /var/www/html/var/log/*.log'
