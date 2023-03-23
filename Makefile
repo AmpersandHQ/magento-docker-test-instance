@@ -17,10 +17,10 @@ list: 					        # Lists all available commands
 	MAGE_VERSION="2.3.7-p4" PHP_VERSION='7.4.29' COMPOSER_VERSION='composer22' MYSQL_VERSION="mysql:5.7.41-debian" ELASTICSEARCH_VERSION='docker.elastic.co/elasticsearch/elasticsearch:7.9.0' ELASTICSEARCH_OPTIONS='' MAGENTO_PORT=1234 make docker-start
 
 2-4-0:			 # Launch 2.4.0
-	MAGE_VERSION="2.4.0" PHP_VERSION='7.4.29' COMPOSER_VERSION='composer22' MYSQL_VERSION="mysql:8.0.32-debian" ELASTICSEARCH_VERSION='docker.elastic.co/elasticsearch/elasticsearch:7.6.0' ELASTICSEARCH_OPTIONS='--elasticsearch-host elasticsearch --elasticsearch-port 9200' MAGENTO_PORT=1234 make docker-start
+	MAGE_VERSION="2.4.0" PHP_VERSION='7.4.29' COMPOSER_VERSION='composer1' MYSQL_VERSION="mysql:8.0.32-debian" ELASTICSEARCH_VERSION='docker.elastic.co/elasticsearch/elasticsearch:7.6.0' ELASTICSEARCH_OPTIONS='--elasticsearch-host elasticsearch --elasticsearch-port 9200' MAGENTO_PORT=1234 make docker-start
 
 2-4-1:			 # Launch 2.4.1
-	MAGE_VERSION="2.4.1" PHP_VERSION='7.4.29' COMPOSER_VERSION='composer22' MYSQL_VERSION="mysql:8.0.32-debian" ELASTICSEARCH_VERSION='docker.elastic.co/elasticsearch/elasticsearch:7.7.0' ELASTICSEARCH_OPTIONS='--elasticsearch-host elasticsearch --elasticsearch-port 9200' MAGENTO_PORT=1234 make docker-start
+	MAGE_VERSION="2.4.1" PHP_VERSION='7.4.29' COMPOSER_VERSION='composer1' MYSQL_VERSION="mysql:8.0.32-debian" ELASTICSEARCH_VERSION='docker.elastic.co/elasticsearch/elasticsearch:7.7.0' ELASTICSEARCH_OPTIONS='--elasticsearch-host elasticsearch --elasticsearch-port 9200' MAGENTO_PORT=1234 make docker-start
 
 2-4-2:			 # Launch 2.4.2
 	MAGE_VERSION="2.4.2" PHP_VERSION='7.4.29' COMPOSER_VERSION='composer22' MYSQL_VERSION="mysql:8.0.32-debian" ELASTICSEARCH_VERSION='docker.elastic.co/elasticsearch/elasticsearch:7.9.0' ELASTICSEARCH_OPTIONS='--elasticsearch-host elasticsearch --elasticsearch-port 9200' MAGENTO_PORT=1234 make docker-start
