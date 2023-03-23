@@ -1,6 +1,10 @@
 version: '3'
 services:
   magento:
+    deploy:
+      resources:
+        limits:
+          memory: 2048M
     depends_on:
       - elasticsearch
       - mysql
