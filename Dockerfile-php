@@ -11,7 +11,7 @@ ENV PATH="/root/.phpenv/bin:$PATH"
 # PHP
 RUN source /root/.bashrc && phpenv install 7.2.34 && phpenv global 7.2.34 && sed -i 's/memory_limit = 128M/memory_limit = 4096M/' /root/.phpenv/versions/7.2.34/etc/php.ini && php --version
 RUN source /root/.bashrc && PHP_BUILD_CONFIGURE_OPTS="--with-freetype" phpenv install 7.4.29 && phpenv global 7.4.29 && sed -i 's/memory_limit = 128M/memory_limit = 4096M/' /root/.phpenv/versions/7.4.29/etc/php.ini && php --version
-RUN cd /root/.phpenv/ && wget https://github.com/jedisct1/libsodium-php/archive/2.0.22.tar.gz && tar -xzf 2.0.22.tar.gz && cd libsodium-php-2.0.22/ && phpize && ./configure && make && echo 'extension=/root/.phpenv/libsodium-php-2.0.22/modules/sodium.so' >> /root/.phpenv/versions/7.4.29/etc/php.ini
+RUN source /root/.bashrc && cd /root/.phpenv/ && wget https://github.com/jedisct1/libsodium-php/archive/2.0.22.tar.gz && tar -xzf 2.0.22.tar.gz && cd libsodium-php-2.0.22/ && phpize && ./configure && make && echo 'extension=/root/.phpenv/libsodium-php-2.0.22/modules/sodium.so' >> /root/.phpenv/versions/7.4.29/etc/php.ini
 RUN source /root/.bashrc && PHP_BUILD_CONFIGURE_OPTS="--with-freetype --with-sodium" phpenv install 8.1.6  && phpenv global 8.1.6  && sed -i 's/memory_limit = 128M/memory_limit = 4096M/' /root/.phpenv/versions/8.1.6/etc/php.ini && php --version
 RUN source /root/.bashrc && PHP_BUILD_CONFIGURE_OPTS="--with-freetype --with-sodium" phpenv install 8.2.2  && phpenv global 8.2.2  && sed -i 's/memory_limit = 128M/memory_limit = 4096M/' /root/.phpenv/versions/8.2.2/etc/php.ini && php --version
 
