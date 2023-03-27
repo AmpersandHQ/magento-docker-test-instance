@@ -1,3 +1,16 @@
 #!/bin/bash
-cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../"
+set -e
+# https://github.com/composer/composer/pull/10402
+if [[ -z "$COMPOSER_BIN_DIR" ]]; then
+  DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+else
+  DIR="$COMPOSER_BIN_DIR"
+fi
+
+if [ -f "$DIR/../Dockerfile-php" ];  then
+  cd "$DIR/../"
+elif [ -f "$DIR/../ampersand/magento-docker-test-instance/Dockerfile-php" ]; then
+  cd "$DIR/../ampersand/magento-docker-test-instance/"
+fi
+
 make $1
