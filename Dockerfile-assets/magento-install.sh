@@ -17,12 +17,6 @@ phpenv global "$PHP_VERSION"
 php --version
 ln -f -s /root/.phpenv/bin/"$COMPOSER_VERSION" /root/.phpenv/bin/composer && composer --version
 
-# Old versions of magento using composer 1 are struggling to detect the sodium package
-COMPOSER_ARGS=""
-#if [[ "$MAGE_VERSION" == 2.4.2* ]]; then
-#  COMPOSER_ARGS='--ignore-platform-req=ext-sodium'
-#fi;
-
 echo "Composer - creating project"
 if [ "$MAGE_VERSION" = "0" ]; then
   composer create-project --repository="$COMPOSER_REPOSITORY" magento/project-community-edition /var/www/html --no-install --no-plugins
@@ -51,13 +45,17 @@ done
 echo "Composer - requiring n98/magerun2"
 composer require n98/magerun2:"*" --dev --no-interaction --no-update
 
+# Old versions of magento using composer 1 are struggling to detect the sodium package
+if [[ "$MAGE_VERSION" == 2.4.2* ]]; then
+  composer config platform.ext-sodium 2.0.22
+fi;
+
 # TODO identify which versions wont work with integration tests for composer require monolog/monolog:"<2.7.0"
 
 echo "Composer - installation"
 cat composer.json
 export COMPOSER_MEMORY_LIMIT=-1
-# shellcheck disable=SC2086
-composer install $COMPOSER_ARGS
+composer install
 
 if [ "$FULL_INSTALL" -eq "1" ]; then
   echo "FULL_INSTALL - Installing magento"
