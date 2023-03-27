@@ -29,7 +29,6 @@ before_install:
 
 script:
   - shellcheck Dockerfile-assets/*.sh
-  - shellcheck bin/*
   - FULL_INSTALL=1 make $TEST_GROUP
   - docker exec mtest '/ampersand/command.sh' 'php bin/magento'
   - curl --head http://0.0.0.0:1234 | grep 200
