@@ -15,7 +15,10 @@ ELASTICSEARCH_OPTIONS=${ELASTICSEARCH_OPTIONS:-}
 echo "Setting the required version of PHP"
 phpenv global "$PHP_VERSION"
 php --version
-ln -f -s /root/.phpenv/bin/"$COMPOSER_VERSION" /root/.phpenv/bin/composer
+ln -f -s /root/.phpenv/bin/"$COMPOSER_VERSION" /root/.phpenv/bin/composer && composer --version
+
+# TODO remove me
+php -r 'print_r(get_defined_constants());' | grep -i sod | head -5
 
 echo "Composer - creating project"
 if [ "$MAGE_VERSION" = "0" ]; then
@@ -31,21 +34,26 @@ composer config repo.composerrepository composer "$COMPOSER_REPOSITORY"
 composer config minimum-stability dev
 composer config prefer-stable true
 
+echo "Composer - adding extensions repositories"
+COUNTER=0
+for d in /extensions/* ; do
+  if [ -d "$d" ]; then
+    composer config "repositories.ext_$COUNTER" "{\"type\": \"path\", \"url\": \"$d\", \"options\": {\"symlink\":true}}"
+    composer require "$(jq -r .name "$d/composer.json")":'*' --no-interaction --no-update
+    # shellcheck disable=SC2004
+    COUNTER=$(($COUNTER +1))
+  fi
+done
+
 echo "Composer - requiring n98/magerun2"
 composer require n98/magerun2:"*" --dev --no-interaction --no-update
 
-export COMPOSER_MEMORY_LIMIT=-1
-echo "Composer - installation"
-if composer install; then
-  echo "COMPOSER_INSTALL_VANILLA=PASS"
-elif composer require monolog/monolog:"<2.7.0" --no-interaction; then
-  echo "COMPOSER_INSTALL_LOWER_MONOLOG=PASS"
-else
-  echo "COMPOSER_INSTALL=FAIL"
-  false
-fi;
+# TODO identify which versions wont work with integration tests for composer require monolog/monolog:"<2.7.0"
 
-# TODO require module here for integration tests if it has been mounted
+echo "Composer - installation"
+cat composer.json
+export COMPOSER_MEMORY_LIMIT=-1
+composer install
 
 if [ "$FULL_INSTALL" -eq "1" ]; then
   echo "FULL_INSTALL - Installing magento"

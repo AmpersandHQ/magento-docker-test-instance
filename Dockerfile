@@ -9,9 +9,6 @@ RUN rm /root/.phpenv/versions/*/etc/conf.d/xdebug.ini
 
 RUN a2enmod rewrite actions alias headers proxy proxy_fcgi proxy_http expires ssl
 
-RUN source /root/.bashrc && wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --quiet && mv composer.phar /root/.phpenv/bin/composer1 && /root/.phpenv/bin/composer1 self-update --1
-RUN source /root/.bashrc && wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --quiet && mv composer.phar /root/.phpenv/bin/composer2 && /root/.phpenv/bin/composer2 self-update --2
-RUN source /root/.bashrc && wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --quiet && mv composer.phar /root/.phpenv/bin/composer22 && /root/.phpenv/bin/composer22 self-update --2 && /root/.phpenv/bin/composer22 self-update --2.2
-
-RUN mkdir -p /ampersand/ /extensions/
+RUN mkdir -p /ampersand/
 COPY Dockerfile-assets/* /ampersand/
+COPY Dockerfile-assets/extensions /extensions
