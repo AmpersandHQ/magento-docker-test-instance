@@ -1,0 +1,3 @@
+#!/bin/bash
+cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../"
+docker exec mtest '/ampersand/command.sh' "$1"

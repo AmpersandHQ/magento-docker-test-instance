@@ -23,9 +23,15 @@ $ make
 2-4-2       Launch 2.4.2
 2-4-3       Launch 2.4.3
 2-4-4       Launch 2.4.4
+2-4-4-p1    Launch 2.4.4-p1
+2-4-4-p2    Launch 2.4.4-p2
+2-4-4-p3    Launch 2.4.4-p3
 2-4-5       Launch 2.4.5
+2-4-5-p1    Launch 2.4.5-p1
+2-4-5-p2    Launch 2.4.5-p2
 2-4-6       Launch 2.4.6
 2-latest    Launch the latest 2.x series
+
 ```
 
 ## Installation - Full
