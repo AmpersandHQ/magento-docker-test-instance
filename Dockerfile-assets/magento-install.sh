@@ -17,6 +17,10 @@ phpenv global "$PHP_VERSION"
 php --version
 ln -f -s /root/.phpenv/bin/"$COMPOSER_VERSION" /root/.phpenv/bin/composer && composer --version
 
+if [ ! "$COMPOSER_VERSION" = "composer1" ]; then
+  rm -rf /extensions/replace-ext-sodium # Only apply this compat extension for old composer1 installs
+fi;
+
 # TODO remove me
 php -r 'print_r(get_defined_constants());' | grep -i sod | head -5 || true
 
