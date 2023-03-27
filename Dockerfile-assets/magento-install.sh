@@ -19,9 +19,9 @@ ln -f -s /root/.phpenv/bin/"$COMPOSER_VERSION" /root/.phpenv/bin/composer && com
 
 # Old versions of magento using composer 1 are struggling to detect the sodium package
 COMPOSER_ARGS=""
-if [[ "$MAGE_VERSION" == 2.4.2* ]]; then
-  COMPOSER_ARGS='--ignore-platform-req=ext-sodium'
-fi;
+#if [[ "$MAGE_VERSION" == 2.4.2* ]]; then
+#  COMPOSER_ARGS='--ignore-platform-req=ext-sodium'
+#fi;
 
 echo "Composer - creating project"
 if [ "$MAGE_VERSION" = "0" ]; then
