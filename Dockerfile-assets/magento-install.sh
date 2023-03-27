@@ -56,7 +56,8 @@ composer require n98/magerun2:"*" --dev --no-interaction --no-update
 echo "Composer - installation"
 cat composer.json
 export COMPOSER_MEMORY_LIMIT=-1
-composer install "$COMPOSER_ARGS"
+# shellcheck disable=SC2086
+composer install $COMPOSER_ARGS
 
 if [ "$FULL_INSTALL" -eq "1" ]; then
   echo "FULL_INSTALL - Installing magento"
