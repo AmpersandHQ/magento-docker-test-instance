@@ -17,12 +17,11 @@ phpenv global "$PHP_VERSION"
 php --version
 ln -f -s /root/.phpenv/bin/"$COMPOSER_VERSION" /root/.phpenv/bin/composer && composer --version
 
-if [ ! "$COMPOSER_VERSION" = "composer1" ]; then
-  rm -rf /extensions/replace-ext-sodium # Only apply this compat extension for old composer1 installs
+# Old versions of magento using composer 1 are struggling to detect the sodium package
+COMPOSER_ARGS=""
+if [[ "$MAGE_VERSION" == 2.4.2* ]]; then
+  COMPOSER_ARGS='--ignore-platform-req=ext-sodium'
 fi;
-
-# TODO remove me
-php -r 'print_r(get_defined_constants());' | grep -i sod | head -5 || true
 
 echo "Composer - creating project"
 if [ "$MAGE_VERSION" = "0" ]; then
@@ -57,7 +56,7 @@ composer require n98/magerun2:"*" --dev --no-interaction --no-update
 echo "Composer - installation"
 cat composer.json
 export COMPOSER_MEMORY_LIMIT=-1
-composer install
+composer install "$COMPOSER_ARGS"
 
 if [ "$FULL_INSTALL" -eq "1" ]; then
   echo "FULL_INSTALL - Installing magento"

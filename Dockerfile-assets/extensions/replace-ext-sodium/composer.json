@@ -1,7 +1,0 @@
-{
-  "name": "ampersand/magento-docker-test-instance-replace-ext-sodium",
-  "description": "For Magento 2.4.2 and Magento 2.4.3, replace ext-sodium for convenient composer installation",
-  "replace": {
-    "ext-sodium": "*"
-  }
-}
