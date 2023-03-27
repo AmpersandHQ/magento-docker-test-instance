@@ -18,7 +18,7 @@ php --version
 ln -f -s /root/.phpenv/bin/"$COMPOSER_VERSION" /root/.phpenv/bin/composer && composer --version
 
 # TODO remove me
-php -r 'print_r(get_defined_constants());' | grep -i sod | head -5
+php -r 'print_r(get_defined_constants());' | grep -i sod | head -5 || true
 
 echo "Composer - creating project"
 if [ "$MAGE_VERSION" = "0" ]; then
@@ -83,7 +83,7 @@ if [ "$FULL_INSTALL" -eq "1" ]; then
       --backend-frontname=admin \
       --base-url="$BASE_URL" \
       --language=en_GB --currency=GBP --timezone=Europe/London \
-      --use-rewrites=1 $ELASTICSEARCH_OPTIONS
+      --use-rewrites=1 $ELASTICSEARCH_OPTIONS -vvv
 
   php bin/magento deploy:mode:set developer
 
