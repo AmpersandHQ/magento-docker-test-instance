@@ -50,14 +50,18 @@ fi
 # Old versions of magento using composer 1 are struggling to detect the sodium package
 if [[ "$MAGE_VERSION" == 2.4.2* ]]; then
   composer config platform.ext-sodium 2.0.22
-fi;
+fi
+
+# fix test compatability with old monolog
+if [[ "$MAGE_VERSION" == "2.4.5" ]]; then
+  composer require --no-update monolog/monolog:"<2.7.0"
+fi
 
 echo "Composer - installation"
 cat composer.json
 export COMPOSER_MEMORY_LIMIT=-1
 composer install
 
-# TODO identify which versions wont work with integration tests for composer require monolog/monolog:"<2.7.0"
 if [ -f "/current_extension/composer.json" ]; then
   echo "Configuring current extension for integration tests"
   mysql -hdatabase -uroot -e "create database if not exists magento_integration_tests"
@@ -68,14 +72,14 @@ if [ -f "/current_extension/composer.json" ]; then
   php /ampersand/prepare-phpunit-config.php /var/www/html "$(composer config name -d /current_extension/)"
   php bin/magento module:enable --all && php bin/magento setup:di:compile
 
-  if [[ "$MAGE_VERSION" == 2.4.3 ]] || [[ "$MAGE_VERSION" == 2.4.4* ]]; then
-    # Seems to fix this issue https://github.com/magento/magento2/issues/33802#issuecomment-1112369298
+  if [[ "$MAGE_VERSION" == 2.4.3 ]] || [[ "$MAGE_VERSION" == 2.4.4* ]] || [[ "$MAGE_VERSION" == 2.4.5* ]]; then
+    # Re-running the install process seems to fix this issue https://github.com/magento/magento2/issues/33802
     composer install --no-interaction
   fi
   if [[ "$MAGE_VERSION" == 2.4.0* ]]; then
     # Declaration of Dotdigitalgroup\Email\Test\Integration\Model\Sync\Review\ReviewTest::setUp() must be compatible
     # with PHPUnit\Framework\TestCase::setUp(): void
-    rm vendor/dotmailer/dotmailer-magento2-extension/Test/Integration/Model/Sync/Review/ReviewTest.php
+    rm -rf vendor/dotmailer/dotmailer-magento2-extension/Test/Integration/
   fi
 fi
 
