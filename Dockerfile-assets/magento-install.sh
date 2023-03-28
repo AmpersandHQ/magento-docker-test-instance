@@ -11,6 +11,7 @@ BASE_DOMAIN="0.0.0.0:$MAGENTO_PORT"
 BASE_URL="http://$BASE_DOMAIN"
 MAGE_VERSION=${MAGE_VERSION:-0}
 ELASTICSEARCH_OPTIONS=${ELASTICSEARCH_OPTIONS:-}
+COMPOSER_REQUIRE_EXTRA=${COMPOSER_REQUIRE_EXTRA:-0}
 
 echo "Setting the required version of PHP"
 phpenv global "$PHP_VERSION"
@@ -44,6 +45,12 @@ done
 
 echo "Composer - requiring n98/magerun2"
 composer require n98/magerun2:"*" --dev --no-interaction --no-update
+
+if [ ! "$COMPOSER_REQUIRE_EXTRA" = "0" ]; then
+  echo "Composer - requiring $COMPOSER_REQUIRE_EXTRA"
+  # shellcheck disable=SC2086
+  composer require $COMPOSER_REQUIRE_EXTRA
+fi
 
 # Old versions of magento using composer 1 are struggling to detect the sodium package
 if [[ "$MAGE_VERSION" == 2.4.2* ]]; then

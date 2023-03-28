@@ -30,6 +30,7 @@ services:
       - MYSQL_DATABASE=magento
       - PHP_VERSION=$PHP_VERSION
       - COMPOSER_VERSION=$COMPOSER_VERSION
+      - COMPOSER_REQUIRE_EXTRA=$COMPOSER_REQUIRE_EXTRA
   elasticsearch:
     container_name: mtest-elasticsearch
     image: $ELASTICSEARCH_VERSION
