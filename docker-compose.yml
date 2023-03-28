@@ -10,6 +10,8 @@ services:
     #  dockerfile: Dockerfile
     platform: linux/amd64
     container_name: mtest
+    volumes:
+      - "$CURRENT_EXTENSION:/current_extension/"
     healthcheck:
       test: [ "CMD", "mysql", "-hdatabase", "-e", "'select 1'" ]
       interval: 1m30s

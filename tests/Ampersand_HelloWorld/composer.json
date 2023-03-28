@@ -1,0 +1,25 @@
+{
+  "name": "ampersand/hello-world",
+  "type": "magento2-module",
+  "repositories": [
+    {
+      "type": "path",
+      "url": "../../",
+      "canonical": true
+    },
+    {"packagist.org": false}
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "files": [
+      "src/registration.php"
+    ],
+    "psr-4": {
+      "Ampersand\\HelloWorld\\" : "src"
+    }
+  },
+  "require-dev": {
+    "ampersand/magento-docker-test-instance": "*"
+  }
+}
