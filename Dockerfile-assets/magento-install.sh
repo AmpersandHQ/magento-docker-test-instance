@@ -27,21 +27,18 @@ fi;
 composer config --no-interaction allow-plugins.dealerdirect/phpcodesniffer-composer-installer true || true
 composer config --no-interaction allow-plugins.laminas/laminas-dependency-plugin true || true
 composer config --no-interaction allow-plugins.magento/* true || true
+# https://github.com/magento/magento2/issues/33802#issuecomment-1112369298
+composer remove --no-interaction magento/composer-root-update-plugin --no-update  || true
 composer config --unset repo.0
 composer config repo.composerrepository composer "$COMPOSER_REPOSITORY"
 composer config minimum-stability dev
 composer config prefer-stable true
 
-echo "Composer - adding extensions repositories"
-COUNTER=0
-for d in /extensions/* ; do
-  if [ -d "$d" ]; then
-    composer config "repositories.ext_$COUNTER" "{\"type\": \"path\", \"url\": \"$d\", \"options\": {\"symlink\":true}}"
-    composer require "$(jq -r .name "$d/composer.json")":'*' --no-interaction --no-update
-    # shellcheck disable=SC2004
-    COUNTER=$(($COUNTER +1))
-  fi
-done
+echo "Composer - adding current extension"
+if [ -f "/current_extension/composer.json" ]; then
+  composer config "repositories.current_extension" "{\"type\": \"path\", \"canonical\":true, \"url\": \"/current_extension/\", \"options\": {\"symlink\":true}}"
+  composer require "$(composer config name -d /current_extension/)":'*' --no-interaction --no-update
+fi
 
 echo "Composer - requiring n98/magerun2"
 composer require n98/magerun2:"*" --dev --no-interaction --no-update
@@ -57,12 +54,19 @@ if [[ "$MAGE_VERSION" == 2.4.2* ]]; then
   composer config platform.ext-sodium 2.0.22
 fi;
 
-# TODO identify which versions wont work with integration tests for composer require monolog/monolog:"<2.7.0"
-
 echo "Composer - installation"
 cat composer.json
 export COMPOSER_MEMORY_LIMIT=-1
 composer install
+
+# TODO identify which versions wont work with integration tests for composer require monolog/monolog:"<2.7.0"
+if [ -f "/current_extension/composer.json" ]; then
+  echo "Configuring current extension for integration tests"
+  mysql -hdatabase -uroot -e "create database if not exists magento_integration_tests"
+  cp /ampersand/install-config-mysql.php.dist dev/tests/integration/etc/install-config-mysql.php
+  php /ampersand/prepare-phpunit-config.php /var/www/html "$(composer config name -d /current_extension/)"
+  php bin/magento module:enable --all && php bin/magento setup:di:compile
+fi
 
 if [ "$FULL_INSTALL" -eq "1" ]; then
   echo "FULL_INSTALL - Installing magento"
