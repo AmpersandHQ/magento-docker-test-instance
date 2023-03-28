@@ -21,12 +21,6 @@ env:
   - TEST_GROUP=2-4-6
   - TEST_GROUP=2-latest
 
-before_install:
-  - travis_retry wget https://github.com/docker/compose/releases/download/v2.17.0/docker-compose-linux-x86_64
-  - sudo mv docker-compose-linux-x86_64 /usr/libexec/docker/cli-plugins/docker-compose
-  - sudo chmod +x /usr/libexec/docker/cli-plugins/docker-compose
-  - docker --version && docker compose version
-
 jobs:
   include:
     - stage: Static Analysis
@@ -36,6 +30,11 @@ jobs:
         - shellcheck bin/*.sh
     - stage: Installs
       name: "Full Install"
+      before_install:
+        - travis_retry wget https://github.com/docker/compose/releases/download/v2.17.0/docker-compose-linux-x86_64
+        - sudo mv docker-compose-linux-x86_64 /usr/libexec/docker/cli-plugins/docker-compose
+        - sudo chmod +x /usr/libexec/docker/cli-plugins/docker-compose
+        - docker --version && docker compose version
       script:
         - FULL_INSTALL=1 make $TEST_GROUP
         - docker exec mtest '/ampersand/command.sh' 'php bin/magento'
