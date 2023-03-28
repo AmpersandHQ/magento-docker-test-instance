@@ -53,7 +53,7 @@ if [[ "$MAGE_VERSION" == 2.4.2* ]]; then
 fi
 
 # fix test compatability with old monolog
-if [[ "$MAGE_VERSION" == "2.4.5" ]]; then
+if [[ "$MAGE_VERSION" == "2.4.4" ]]; then
   composer require --no-update monolog/monolog:"<2.7.0"
 fi
 
