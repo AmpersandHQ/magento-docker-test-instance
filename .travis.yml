@@ -30,25 +30,27 @@ before_install:
 jobs:
   include:
     - stage: Static Analysis
+      name: "Static Analysis"
       script:
         - shellcheck Dockerfile-assets/*.sh
         - shellcheck bin/*.sh
-    - stage: Full Install
+    - stage: Installs
+      name: "Full Install"
       script:
         - FULL_INSTALL=1 make $TEST_GROUP
         - docker exec mtest '/ampersand/command.sh' 'php bin/magento'
         - curl --head http://0.0.0.0:1234 | grep 200
-      after_failure:
-        - docker exec mtest '/ampersand/command.sh' 'cat /var/www/html/var/log/*.log'
-        - docker exec mtest '/ampersand/command.sh' 'cat /var/log/apache2/error.log'
-        - docker exec mtest '/ampersand/command.sh' 'cat /var/log/apache2/access.log'
-        - sleep 10
-    - stage: Partial Install for Integration Tests
-      script:
+    - script:
         - cd tests/Ampersand_HelloWorld
         - composer install --no-interaction -vvv
         - CURRENT_EXTENSION="." vendor/bin/mtest-make $TEST_GROUP
         - vendor/bin/mtest 'vendor/bin/phpunit -c /var/www/html/dev/tests/integration/phpunit.xml.dist --testsuite Integration --debug'
-      after_failure:
-        - vendor/bin/mtest 'cat var/log/*.log'
-        - vendor/bin/mtest 'cat dev/tests/integration/tmp/sandbox*/var/log/*.log'
+      name: "Partial Install for Integration Tests"
+
+after_failure:
+  - vendor/bin/mtest 'cat var/log/*.log'
+  - vendor/bin/mtest 'cat dev/tests/integration/tmp/sandbox*/var/log/*.log'
+  - docker exec mtest '/ampersand/command.sh' 'cat /var/www/html/var/log/*.log'
+  - docker exec mtest '/ampersand/command.sh' 'cat /var/log/apache2/error.log'
+  - docker exec mtest '/ampersand/command.sh' 'cat /var/log/apache2/access.log'
+  - sleep 10
