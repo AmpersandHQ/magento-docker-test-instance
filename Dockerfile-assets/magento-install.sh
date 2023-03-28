@@ -27,8 +27,6 @@ fi;
 composer config --no-interaction allow-plugins.dealerdirect/phpcodesniffer-composer-installer true || true
 composer config --no-interaction allow-plugins.laminas/laminas-dependency-plugin true || true
 composer config --no-interaction allow-plugins.magento/* true || true
-# https://github.com/magento/magento2/issues/33802#issuecomment-1112369298
-composer remove --no-interaction magento/composer-root-update-plugin --no-update  || true
 composer config --unset repo.0
 composer config repo.composerrepository composer "$COMPOSER_REPOSITORY"
 composer config minimum-stability dev
@@ -69,6 +67,16 @@ if [ -f "/current_extension/composer.json" ]; then
   fi
   php /ampersand/prepare-phpunit-config.php /var/www/html "$(composer config name -d /current_extension/)"
   php bin/magento module:enable --all && php bin/magento setup:di:compile
+
+  if [[ "$MAGE_VERSION" == 2.4.3 ]] || [[ "$MAGE_VERSION" == 2.4.4* ]]; then
+    # Seems to fix this issue https://github.com/magento/magento2/issues/33802#issuecomment-1112369298
+    composer install --no-interaction
+  fi
+  if [[ "$MAGE_VERSION" == 2.4.0* ]]; then
+    # Declaration of Dotdigitalgroup\Email\Test\Integration\Model\Sync\Review\ReviewTest::setUp() must be compatible
+    # with PHPUnit\Framework\TestCase::setUp(): void
+    rm vendor/dotmailer/dotmailer-magento2-extension/Test/Integration/Model/Sync/Review/ReviewTest.php
+  fi
 fi
 
 if [ "$FULL_INSTALL" -eq "1" ]; then
