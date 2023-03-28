@@ -49,7 +49,7 @@ composer require n98/magerun2:"*" --dev --no-interaction --no-update
 if [ ! "$COMPOSER_REQUIRE_EXTRA" = "0" ]; then
   echo "Composer - requiring $COMPOSER_REQUIRE_EXTRA"
   # shellcheck disable=SC2086
-  composer require $COMPOSER_REQUIRE_EXTRA
+  composer require $COMPOSER_REQUIRE_EXTRA --no-interaction --no-update
 fi
 
 # Old versions of magento using composer 1 are struggling to detect the sodium package
