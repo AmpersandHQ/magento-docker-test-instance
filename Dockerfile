@@ -11,4 +11,3 @@ RUN a2enmod rewrite actions alias headers proxy proxy_fcgi proxy_http expires ss
 
 RUN mkdir -p /ampersand/
 COPY Dockerfile-assets/* /ampersand/
-COPY Dockerfile-assets/extensions /extensions
