@@ -46,15 +46,15 @@ before_install:
   - docker --version && docker compose version
 
 script:
-  - shellcheck bin/*.sh
+  - shellcheck bin/
   - shellcheck Dockerfile-assets/*.sh
-  - if [[ $INTEGRATION = false ]]; FULL_INSTALL=1 make $TEST_GROUP; fi
-  - if [[ $INTEGRATION = false ]]; curl --head http://0.0.0.0:1234 | grep 200; fi
-  - if [[ $INTEGRATION = false ]]; docker exec mtest '/ampersand/command.sh' 'php bin/magento'; fi
-  - if [[ $INTEGRATION = true ]]; cd tests/Ampersand_HelloWorld; fi
-  - if [[ $INTEGRATION = true ]]; composer install --no-interaction -vvv; fi
-  - if [[ $INTEGRATION = true ]]; CURRENT_EXTENSION="." vendor/bin/mtest-make $TEST_GROUP ; fi
-  - if [[ $INTEGRATION = true ]]; vendor/bin/mtest 'vendor/bin/phpunit -c /var/www/html/dev/tests/integration/phpunit.xml.dist --testsuite Integration --debug' ; fi
+  - if [[ $INTEGRATION = false ]]; then FULL_INSTALL=1 make $TEST_GROUP; fi
+  - if [[ $INTEGRATION = false ]]; then curl --head http://0.0.0.0:1234 | grep 200; fi
+  - if [[ $INTEGRATION = false ]]; then docker exec mtest '/ampersand/command.sh' 'php bin/magento'; fi
+  - if [[ $INTEGRATION = true ]]; then cd tests/Ampersand_HelloWorld; fi
+  - if [[ $INTEGRATION = true ]]; then composer install --no-interaction -vvv; fi
+  - if [[ $INTEGRATION = true ]]; then CURRENT_EXTENSION="." vendor/bin/mtest-make $TEST_GROUP ; fi
+  - if [[ $INTEGRATION = true ]]; then vendor/bin/mtest 'vendor/bin/phpunit -c /var/www/html/dev/tests/integration/phpunit.xml.dist --testsuite Integration --debug' ; fi
 
 after_failure:
   - docker exec mtest '/ampersand/command.sh' 'cat /var/www/html/var/log/*.log'
