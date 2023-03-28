@@ -46,7 +46,7 @@ before_install:
   - docker --version && docker compose version
 
 script:
-  - shellcheck bin/
+  - shellcheck bin/*
   - shellcheck Dockerfile-assets/*.sh
   - if [[ $INTEGRATION = false ]]; then FULL_INSTALL=1 make $TEST_GROUP; fi
   - if [[ $INTEGRATION = false ]]; then curl --head http://0.0.0.0:1234 | grep 200; fi
