@@ -64,6 +64,9 @@ if [ -f "/current_extension/composer.json" ]; then
   echo "Configuring current extension for integration tests"
   mysql -hdatabase -uroot -e "create database if not exists magento_integration_tests"
   cp /ampersand/install-config-mysql.php.dist dev/tests/integration/etc/install-config-mysql.php
+  if [[ "$MAGE_VERSION" == 2.3* ]]; then
+    cp /ampersand/install-config-mysql-no-search.php.dist dev/tests/integration/etc/install-config-mysql.php
+  fi
   php /ampersand/prepare-phpunit-config.php /var/www/html "$(composer config name -d /current_extension/)"
   php bin/magento module:enable --all && php bin/magento setup:di:compile
 fi
