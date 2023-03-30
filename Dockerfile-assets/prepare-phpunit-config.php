@@ -41,6 +41,7 @@ echo "Magento phpunit unit xml is at $unitConfigPath" . PHP_EOL;
 
 $unitConfig = new \SimpleXMLElement($unitConfigPath, 0, true);
 unset($unitConfig->testsuites);
+//failOnEmptyTestSuite todo bake this into the config
 $testsuiteNode = $unitConfig->addChild('testsuites')->addChild('testsuite');
 $testsuiteNode->addAttribute('name', 'Unit');
 $testsuiteNode->addChild('directory', "$magentoPath/vendor/$packageName/$unitTestsDir")->addAttribute('suffix', 'Test.php');

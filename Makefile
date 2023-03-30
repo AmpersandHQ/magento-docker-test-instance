@@ -59,6 +59,7 @@ CURRENT_EXTENSION ?= '/dev/null'
 
 docker-start:       # Launch docker container
 	docker compose --file=docker-compose.yml pull --quiet
+	docker history ampco/magento-docker-test-instance:latest
 	docker compose --file=docker-compose.yml down --remove-orphans
 	docker container rm -f mtest-mysql mtest mtest-elasticsearch
 	docker compose --file=docker-compose.yml up --quiet-pull --remove-orphans -d magento #--build
