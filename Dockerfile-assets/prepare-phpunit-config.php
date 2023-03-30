@@ -3,6 +3,8 @@ set_error_handler(function ($severity, $message, $file, $line) {
     throw new \ErrorException($message, $severity, $severity, $file, $line);
 });
 
+echo "prepare-phpunit-config.php" . PHP_EOL;
+
 $magentoPath = realpath($argv[1]);
 echo "Current working directory " . $magentoPath . PHP_EOL;
 
@@ -43,7 +45,9 @@ $testsuiteNode = $unitConfig->addChild('testsuites')->addChild('testsuite');
 $testsuiteNode->addAttribute('name', 'Unit');
 $testsuiteNode->addChild('directory', "$magentoPath/vendor/$packageName/$unitTestsDir")->addAttribute('suffix', 'Test.php');
 
-$unitConfig->asXML($unitConfigPath);
+# https://github.com/magento/magento2/pull/36703
+$unitConfigAsXml = str_replace('<string>allure.config.php</string>', '<string>dev/tests/unit/allure/allure.config.php</string>', $unitConfig->asXML());
+file_put_contents($unitConfigPath, $unitConfigAsXml);
 
 echo "Definition" . PHP_EOL;
 echo str_pad('', 120, '-') . PHP_EOL;

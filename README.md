@@ -45,18 +45,9 @@ FULL_INSTALL=1 ./bin/mtest-make 2-4-5
 
 That will allow you to then browse `http://0.0.0.0:1234/admin` with the credentials `admin/somepassword123`
 
-## Partial Installation for phpunit tests
+## Partial Installation for running unit/integration tests
 
-(TODO WIP - currently incomplete) For a partial installation (for unit tests / integration tests)
-```
-make 2-4-5
-```
-
-- TODO
-  - Support for integration tests
-    - For perf reasons we can probably spin this up and have a volume refer a module on your local machine, then set this up as a composer repository to install into the magento instance via a symlink type.
-    - This would mean you can edit your module locally and have it be updated in the vendor directory within the magento container
-    - Not a viable way to build a whole project, but if you have only some integration tests to play with it should be quick
+Please see [this sample module](https://github.com/AmpersandHQ/magento-docker-test-instance/tree/master) for instructions on how to run your custom integration/unit tests. 
 
 ## Execute commands inside the docker container
 
