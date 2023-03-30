@@ -46,7 +46,7 @@ $testsuiteNode->addAttribute('name', 'Unit');
 $testsuiteNode->addChild('directory', "$magentoPath/vendor/$packageName/$unitTestsDir")->addAttribute('suffix', 'Test.php');
 
 # https://github.com/magento/magento2/pull/36703
-$unitConfigAsXml = str_replace('<string>allure.config.php</string>', '<string>dev/tests/unit/allure/allure.config.php</string>', $unitConfig->asXML());
+$unitConfigAsXml = str_replace('<string>allure/allure.config.php</string>', '<string>dev/tests/unit/allure/allure.config.php</string>', $unitConfig->asXML());
 file_put_contents($unitConfigPath, $unitConfigAsXml);
 
 echo "Definition" . PHP_EOL;
