@@ -12,6 +12,8 @@ BASE_URL="http://$BASE_DOMAIN"
 MAGE_VERSION=${MAGE_VERSION:-0}
 ELASTICSEARCH_OPTIONS=${ELASTICSEARCH_OPTIONS:-}
 COMPOSER_REQUIRE_EXTRA=${COMPOSER_REQUIRE_EXTRA:-0}
+INTEGRATION_TESTS_PATH=${INTEGRATION_TESTS_PATH:-'src/Test/Integration'}
+UNIT_TESTS_PATH=${UNIT_TESTS_PATH:-'src/Test/Unit'}
 
 echo "Setting the required version of PHP"
 phpenv global "$PHP_VERSION"
@@ -69,7 +71,7 @@ if [ -f "/current_extension/composer.json" ]; then
   if [[ "$MAGE_VERSION" == 2.3* ]]; then
     cp /ampersand/install-config-mysql-no-search.php.dist dev/tests/integration/etc/install-config-mysql.php
   fi
-  php /ampersand/prepare-phpunit-config.php /var/www/html "$(composer config name -d /current_extension/)"
+  php /ampersand/prepare-phpunit-config.php /var/www/html "$(composer config name -d /current_extension/)" "$INTEGRATION_TESTS_PATH" "$UNIT_TESTS_PATH"
   php bin/magento module:enable --all && php bin/magento setup:di:compile
 
   if [[ "$MAGE_VERSION" == 2.4.3 ]] || [[ "$MAGE_VERSION" == 2.4.4* ]] || [[ "$MAGE_VERSION" == 2.4.5* ]]; then

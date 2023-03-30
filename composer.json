@@ -2,7 +2,8 @@
   "name": "ampersand/magento-docker-test-instance",
   "bin": [
     "bin/mtest",
-    "bin/mtest-make"
+    "bin/mtest-make",
+    "bin/mtest-ssh"
   ],
   "description": "A dev dependency helper to set up a magento instance, to be used for testing modules",
   "license": "LGPL-3.0-only"

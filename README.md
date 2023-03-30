@@ -2,16 +2,18 @@
 
 [![Build Status](https://app.travis-ci.com/AmpersandHQ/magento-docker-test-instance.svg?branch=master)](https://app.travis-ci.com/AmpersandHQ/magento-docker-test-instance)
 
-Quickly provision a disposable vanilla magento docker instance for testing against.
+Quickly provision a disposable magento docker instance for testing against.
+
+You can either boot it as a full installation of Magento that you can browse around, or bring it in as a `require-dev` dependency to run your integration and unit tests.
 
 This is for test use only, not for production or any deployed environment.
 
 # Usage 
 
-Run `make` to see all supported versions
+Run `./bin/mtest-make` to see all supported versions
 
 ```
-$ make
+$ ./bin/mtest-make
 
 2-3-7       Launch 2.3.7
 2-3-7-p1    Launch 2.3.7-p1
@@ -34,16 +36,16 @@ $ make
 
 ```
 
-## Installation - Full
+## Full Installation
 
 For a full installation
 ```
-FULL_INSTALL=1 make 2-4-5
+FULL_INSTALL=1 ./bin/mtest-make 2-4-5
 ```
 
 That will allow you to then browse `http://0.0.0.0:1234/admin` with the credentials `admin/somepassword123`
 
-## Installation - Partial
+## Partial Installation for phpunit tests
 
 (TODO WIP - currently incomplete) For a partial installation (for unit tests / integration tests)
 ```
@@ -59,12 +61,11 @@ make 2-4-5
 ## Execute commands inside the docker container
 
 ```
-docker exec mtest '/ampersand/command.sh' 'vendor/bin/n98-magerun2 config:store:set test/some/config 123'
+./bin/mtest 'vendor/bin/n98-magerun2 config:store:set test/some/config 123'
 ```
 
-## Caveats
+or to connect to the container
 
-We try to ensure this installation is as close to the vanilla Magento offering as possible, however sometimes amendments need to be made.
-
-Composer modules added
-- `n98/magerun2` - for developer tooling
+```
+./bin/mtest-ssh
+```

@@ -12,19 +12,40 @@ if (!is_file($magentoPath . '/app/etc/di.xml')) {
 $packageName = $argv[2];
 echo "Using package name $packageName" . PHP_EOL;
 
-$configPath = "$magentoPath/dev/tests/integration/phpunit.xml.dist";
-echo "Magento phpunit integration xml is at $configPath" . PHP_EOL;
+$integrationTestsDir = $argv[3];
+echo "Integration tests live in $integrationTestsDir" . PHP_EOL;
 
-$config = new \SimpleXMLElement($configPath, 0, true);
+$unitTestsDir = $argv[4];
+echo "Unit tests live in $unitTestsDir" . PHP_EOL;
 
-unset($config->testsuites);
-$testsuiteNode = $config->addChild('testsuites')->addChild('testsuite');
+$integrationConfigPath = "$magentoPath/dev/tests/integration/phpunit.xml.dist";
+echo "Magento phpunit integration xml is at $integrationConfigPath" . PHP_EOL;
+
+$integrationConfig = new \SimpleXMLElement($integrationConfigPath, 0, true);
+unset($integrationConfig->testsuites);
+$testsuiteNode = $integrationConfig->addChild('testsuites')->addChild('testsuite');
 $testsuiteNode->addAttribute('name', 'Integration');
-$testsuiteNode->addChild('directory', "$magentoPath/vendor/$packageName/src/Test/Integration")->addAttribute('suffix', 'Test.php');
+$testsuiteNode->addChild('directory', "$magentoPath/vendor/$packageName/$integrationTestsDir")->addAttribute('suffix', 'Test.php');
 
-$config->asXML($configPath);
+$integrationConfig->asXML($integrationConfigPath);
 
 echo "Definition" . PHP_EOL;
 echo str_pad('', 120, '-') . PHP_EOL;
-echo file_get_contents($configPath) . PHP_EOL;
+echo file_get_contents($integrationConfigPath) . PHP_EOL;
+echo str_pad('', 120, '-') . PHP_EOL;
+
+$unitConfigPath = "$magentoPath/dev/tests/unit/phpunit.xml.dist";
+echo "Magento phpunit unit xml is at $unitConfigPath" . PHP_EOL;
+
+$unitConfig = new \SimpleXMLElement($unitConfigPath, 0, true);
+unset($unitConfig->testsuites);
+$testsuiteNode = $unitConfig->addChild('testsuites')->addChild('testsuite');
+$testsuiteNode->addAttribute('name', 'Unit');
+$testsuiteNode->addChild('directory', "$magentoPath/vendor/$packageName/$unitTestsDir")->addAttribute('suffix', 'Test.php');
+
+$unitConfig->asXML($unitConfigPath);
+
+echo "Definition" . PHP_EOL;
+echo str_pad('', 120, '-') . PHP_EOL;
+echo file_get_contents($unitConfigPath) . PHP_EOL;
 echo str_pad('', 120, '-') . PHP_EOL;
