@@ -4,7 +4,7 @@ services:
     depends_on:
       - elasticsearch
       - mysql
-    image: ampco/magento-docker-test-instance:latest
+    image: ampco/magento-docker-test-instance:current
     #build:
     #  context: ./
     #  dockerfile: Dockerfile
