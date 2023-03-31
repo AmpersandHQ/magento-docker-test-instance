@@ -1,9 +1,8 @@
 #!/bin/bash
 # shellcheck source=/dev/null
-source /root/.bashrc
+source /home/ampersand/.bashrc
 set -euo pipefail
 cd /var/www/html
-rm -f /var/www/html/*
 
 COMPOSER_REPOSITORY=${COMPOSER_REPOSITORY:-https://repo-magento-mirror.fooman.co.nz/}
 FULL_INSTALL=${FULL_INSTALL:-0}
@@ -18,7 +17,7 @@ UNIT_TESTS_PATH=${UNIT_TESTS_PATH:-'src/Test/Unit'}
 echo "Setting the required version of PHP"
 phpenv global "$PHP_VERSION"
 php --version
-ln -f -s /root/.phpenv/bin/"$COMPOSER_VERSION" /root/.phpenv/bin/composer && composer --version
+ln -f -s /home/ampersand/.phpenv/bin/"$COMPOSER_VERSION" /home/ampersand/.phpenv/bin/composer && composer --version
 
 echo "Composer - creating project"
 if [ "$MAGE_VERSION" = "0" ]; then
@@ -34,8 +33,8 @@ composer config repo.composerrepository composer "$COMPOSER_REPOSITORY"
 composer config minimum-stability dev
 composer config prefer-stable true
 
-echo "Composer - adding current extension"
 if [ -f "/current_extension/composer.json" ]; then
+  echo "Composer - adding current extension"
   composer config "repositories.current_extension" "{\"type\": \"path\", \"canonical\":true, \"url\": \"/current_extension/\", \"options\": {\"symlink\":true}}"
   composer require "$(composer config name -d /current_extension/)":'*' --no-interaction --no-update
 fi
@@ -67,11 +66,11 @@ composer install
 if [ -f "/current_extension/composer.json" ]; then
   echo "Configuring current extension for integration tests"
   mysql -hdatabase -uroot -e "create database if not exists magento_integration_tests"
-  cp /ampersand/install-config-mysql.php.dist dev/tests/integration/etc/install-config-mysql.php
+  cp /home/ampersand/assets/install-config-mysql.php.dist dev/tests/integration/etc/install-config-mysql.php
   if [[ "$MAGE_VERSION" == 2.3* ]]; then
-    cp /ampersand/install-config-mysql-no-search.php.dist dev/tests/integration/etc/install-config-mysql.php
+    cp /home/ampersand/assets/install-config-mysql-no-search.php.dist dev/tests/integration/etc/install-config-mysql.php
   fi
-  php /ampersand/prepare-phpunit-config.php /var/www/html "$(composer config name -d /current_extension/)" "$INTEGRATION_TESTS_PATH" "$UNIT_TESTS_PATH"
+  php /home/ampersand/assets/prepare-phpunit-config.php /var/www/html "$(composer config name -d /current_extension/)" "$INTEGRATION_TESTS_PATH" "$UNIT_TESTS_PATH"
   php bin/magento module:enable --all && php bin/magento setup:di:compile
 
   if [[ "$MAGE_VERSION" == 2.4.3 ]] || [[ "$MAGE_VERSION" == 2.4.4* ]] || [[ "$MAGE_VERSION" == 2.4.5* ]]; then
@@ -92,15 +91,15 @@ if [ "$FULL_INSTALL" -eq "1" ]; then
   sed \
   -e "s;%MAGENTO_PORT%;$MAGENTO_PORT;g" \
   -e "s;%DOCUMENT_ROOT%;/var/www/html;g" \
-  /ampersand/vhost.conf | tee /etc/apache2/sites-enabled/000-default.conf;
+  /home/ampersand/assets/vhost.conf | tee /etc/apache2/sites-enabled/000-default.conf;
 
-  apachectl configtest
+  sudo /usr/sbin/apachectl configtest
 
   echo "Starting apache"
-  apachectl restart
+  sudo /usr/sbin/apachectl restart
 
   echo "Starting php-fpm"
-  /root/.phpenv/versions/"$PHP_VERSION"/etc/init.d/php-fpm restart
+  /home/ampersand/.phpenv/versions/"$PHP_VERSION"/etc/init.d/php-fpm restart
 
   mysql -hdatabase -uroot -e "create database if not exists $MYSQL_DATABASE"
 
@@ -116,6 +115,9 @@ if [ "$FULL_INSTALL" -eq "1" ]; then
       --use-rewrites=1 $ELASTICSEARCH_OPTIONS -vvv
 
   php bin/magento deploy:mode:set developer
+
+  echo "Disabling 2fa modules"
+  php bin/magento module:disable Magento_TwoFactorAuth || php bin/magento module:disable Magento_AdminAdobeImsTwoFactorAuth Magento_TwoFactorAuth || true
 
   vendor/bin/n98-magerun2 sys:info
   vendor/bin/n98-magerun2 config:store:get  web/unsecure/base_url

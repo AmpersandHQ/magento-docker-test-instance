@@ -1,2 +1,2 @@
 #!/bin/bash
-docker exec mtest '/ampersand/command.sh' "$1"
+docker exec mtest '/home/ampersand/assets/command.sh' "$1"

@@ -5,6 +5,7 @@ services:
       - elasticsearch
       - mysql
     image: ampco/magento-docker-test-instance:current
+    #uncomment the below and the --build in the Makefile to test changes locally
     #build:
     #  context: ./
     #  dockerfile: Dockerfile

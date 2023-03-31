@@ -4,9 +4,14 @@
 
 Quickly provision a disposable magento docker instance for testing against.
 
-You can either boot it as a full installation of Magento that you can browse around, or bring it in as a `require-dev` dependency to run your integration and unit tests.
+Supports
+- Booting a full instance for you to click around and run manual or other automated tests on
+- Integration testing a module
+- Unit testing a module
 
-This is for test use only, not for production or any deployed environment.
+We try to keep these installations as vanilla and untouched as possible. However there are a few caveats
+- This is for test use only, not for production or any deployed environment. This uses https://repo-magento-mirror.fooman.co.nz/ to pull in Magento which should not be used for production.
+- 2FA modules are disabled by default to allow easier admin access
 
 # Usage 
 
@@ -38,25 +43,28 @@ $ ./bin/mtest-make
 
 ## Full Installation
 
-For a full installation
+You can install by cloning this repo
 ```
+git clone https://github.com/AmpersandHQ/magento-docker-test-instance
+cd magento-docker-test-instance
 FULL_INSTALL=1 ./bin/mtest-make 2-4-5
+
+# run commands inside the  container
+./bin/mtest 'vendor/bin/n98-magerun2 config:store:set test/some/config 123'
+```
+
+or pull it in as a composer dependency
+
+```
+composer require --dev ampersand/magento-docker-test-instance:"^0.1"
+FULL_INSTALL=1 vendor/bin/mtest-make 2-4-5
+
+# run commands inside the  container
+vendor/bin/mtest 'vendor/bin/n98-magerun2 config:store:set test/some/config 123'
 ```
 
 That will allow you to then browse `http://0.0.0.0:1234/admin` with the credentials `admin/somepassword123`
 
 ## Partial Installation for running unit/integration tests
 
-Please see [this sample module](https://github.com/AmpersandHQ/magento-docker-test-instance/tree/master) for instructions on how to run your custom integration/unit tests. 
-
-## Execute commands inside the docker container
-
-```
-./bin/mtest 'vendor/bin/n98-magerun2 config:store:set test/some/config 123'
-```
-
-or to connect to the container
-
-```
-./bin/mtest-ssh
-```
+Please see [this sample module](https://github.com/AmpersandHQ/magento-docker-test-instance/tree/sample) for instructions on how to run your custom integration/unit tests.
