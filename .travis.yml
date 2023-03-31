@@ -58,8 +58,8 @@ script:
   - if [[ $INTEGRATION = true ]]; then vendor/bin/mtest 'vendor/bin/phpunit -c /var/www/html/dev/tests/integration/phpunit.xml.dist --testsuite Integration --debug' ; fi
 
 after_failure:
-  - docker exec mtest '/ampersand/command.sh' 'cat /var/www/html/var/log/*.log'
-  - docker exec mtest '/ampersand/command.sh' 'cat /var/log/apache2/error.log'
-  - docker exec mtest '/ampersand/command.sh' 'cat /var/log/apache2/access.log'
+  - docker exec mtest '/home/ampersand/assets/command.sh' 'cat /var/www/html/var/log/*.log'
+  - docker exec mtest '/home/ampersand/assets/command.sh' 'cat /var/log/apache2/error.log'
+  - docker exec mtest '//home/ampersand/assets/command.sh' 'cat /var/log/apache2/access.log'
   - vendor/bin/mtest 'cat dev/tests/integration/tmp/sandbox*/var/log/*.log'
   - sleep 10

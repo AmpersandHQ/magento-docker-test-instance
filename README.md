@@ -4,12 +4,13 @@
 
 Quickly provision a disposable magento docker instance for testing against.
 
-Supports
+Features
 - Booting a full instance for you to click around and run manual or other automated tests on
 - Integration testing a module
 - Unit testing a module
+- Runs the same locally as in your CI pipeline (the [sample module](https://github.com/AmpersandHQ/magento-docker-test-instance/tree/sample) demonstrates travis)
 
-We try to keep these installations as vanilla and untouched as possible. However there are a few caveats
+We try to keep these installations as vanilla and untouched as possible. However, there are a few caveats
 - This is for test use only, not for production or any deployed environment. This uses https://repo-magento-mirror.fooman.co.nz/ to pull in Magento which should not be used for production.
 - 2FA modules are disabled by default to allow easier admin access
 
