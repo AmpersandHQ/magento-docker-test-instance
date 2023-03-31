@@ -12,6 +12,7 @@ before_install:
   - docker --version && docker compose version
 
 script:
+  - cd sample
   - composer install --no-interaction
   - CURRENT_EXTENSION="." vendor/bin/mtest-make $TEST_GROUP
   - vendor/bin/mtest 'vendor/bin/phpunit -c /var/www/html/dev/tests/unit/phpunit.xml.dist --testsuite Unit --debug'
