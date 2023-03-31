@@ -8,7 +8,9 @@ To use https://github.com/AmpersandHQ/magento-docker-test-instance for running y
 composer require --dev ampersand/magento-docker-test-instance:"^0.1"
 ```
 
-Then locally or in your CI pipeline you can tell it to boot a version of Magento for testing, passing in the location of the current extension
+Then locally or in your CI pipeline you can tell it to boot a version of Magento for testing, passing in the location of the current extension.
+
+The current extension will be mounted into the docker container as a volume, and then composer required as a symlink [path repository](https://getcomposer.org/doc/05-repositories.md#path) so that it is installed correctly. This means that local changes are immediately present within the magento install.
 
 ```
 CURRENT_EXTENSION="." vendor/bin/mtest-make 2-4-5
@@ -24,6 +26,12 @@ Logs can be accessed
 ```
 vendor/bin/mtest 'ls -l /var/www/html/var/report/'
 vendor/bin/mtest 'cat /var/www/html/var/log/*.log'
+```
+
+You can connect to the container to clear caches, regenerate di, etc
+
+```
+vendor/bin/mtest-ssh
 ```
 
 ### Configuration
