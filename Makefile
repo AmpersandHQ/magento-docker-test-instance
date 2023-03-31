@@ -58,7 +58,6 @@ CURRENT_EXTENSION ?= '/dev/null'
 	PHP_VERSION='8.2.2' COMPOSER_VERSION='composer22' MYSQL_VERSION="mysql:8.0.32-debian" ELASTICSEARCH_VERSION='docker.elastic.co/elasticsearch/elasticsearch:7.17.0' ELASTICSEARCH_OPTIONS='--search-engine elasticsearch7 --elasticsearch-host elasticsearch --elasticsearch-port 9200' MAGENTO_PORT=1234 CURRENT_EXTENSION=$(CURRENT_EXTENSION) make docker-start
 
 docker-start:       # Launch docker container
-	docker compose --file=docker-compose.yml pull --quiet
 	docker compose --file=docker-compose.yml down --remove-orphans
 	docker container rm -f mtest-mysql mtest mtest-elasticsearch
 	docker compose --file=docker-compose.yml up --quiet-pull --remove-orphans -d magento #--build
