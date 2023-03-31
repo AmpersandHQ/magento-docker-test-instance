@@ -1,0 +1,23 @@
+services:
+  - docker
+
+env:
+  - TEST_GROUP=2-4-5
+  - TEST_GROUP=2-latest
+
+before_install:
+  - travis_retry wget https://github.com/docker/compose/releases/download/v2.17.0/docker-compose-linux-x86_64
+  - sudo mv docker-compose-linux-x86_64 /usr/libexec/docker/cli-plugins/docker-compose
+  - sudo chmod +x /usr/libexec/docker/cli-plugins/docker-compose
+  - docker --version && docker compose version
+
+script:
+  - composer install --no-interaction
+  - CURRENT_EXTENSION="." vendor/bin/mtest-make $TEST_GROUP
+  - vendor/bin/mtest 'vendor/bin/phpunit -c /var/www/html/dev/tests/unit/phpunit.xml.dist --testsuite Unit --debug'
+  - vendor/bin/mtest 'vendor/bin/phpunit -c /var/www/html/dev/tests/integration/phpunit.xml.dist --testsuite Integration --debug'
+
+after_failure:
+  - vendor/bin/mtest 'cat /var/www/html/var/log/*.log'
+  - vendor/bin/mtest 'cat dev/tests/integration/tmp/sandbox*/var/log/*.log'
+  - sleep 10

@@ -1,0 +1,15 @@
+{
+  "name": "ampersand/hello-world",
+  "type": "magento2-module",
+  "autoload": {
+    "files": [
+      "src/registration.php"
+    ],
+    "psr-4": {
+      "Ampersand\\HelloWorld\\" : "src"
+    }
+  },
+  "require-dev": {
+    "ampersand/magento-docker-test-instance": "^0.1"
+  }
+}
