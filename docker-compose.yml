@@ -45,5 +45,7 @@ services:
     container_name: mtest-mysql
     image: $MYSQL_VERSION
     platform: linux/amd64
+    ports:
+      - "1235:3306"
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=1
