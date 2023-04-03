@@ -3,4 +3,4 @@
 source /home/ampersand/.bashrc
 set -euo pipefail
 cd /var/www/html
-eval $1
+eval "$1"
