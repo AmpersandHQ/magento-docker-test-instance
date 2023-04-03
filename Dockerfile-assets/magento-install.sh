@@ -63,27 +63,6 @@ cat composer.json
 export COMPOSER_MEMORY_LIMIT=-1
 composer install
 
-if [ -f "/current_extension/composer.json" ]; then
-  echo "Configuring current extension for integration tests"
-  mysql -hdatabase -uroot -e "create database if not exists magento_integration_tests"
-  cp /home/ampersand/assets/install-config-mysql.php.dist dev/tests/integration/etc/install-config-mysql.php
-  if [[ "$MAGE_VERSION" == 2.3* ]]; then
-    cp /home/ampersand/assets/install-config-mysql-no-search.php.dist dev/tests/integration/etc/install-config-mysql.php
-  fi
-  php /home/ampersand/assets/prepare-phpunit-config.php /var/www/html "$(composer config name -d /current_extension/)" "$INTEGRATION_TESTS_PATH" "$UNIT_TESTS_PATH"
-  php bin/magento module:enable --all && php bin/magento setup:di:compile
-
-  if [[ "$MAGE_VERSION" == 2.4.3 ]] || [[ "$MAGE_VERSION" == 2.4.4* ]] || [[ "$MAGE_VERSION" == 2.4.5* ]]; then
-    # Re-running the install process seems to fix this issue https://github.com/magento/magento2/issues/33802
-    composer install --no-interaction
-  fi
-  if [[ "$MAGE_VERSION" == 2.4.0* ]]; then
-    # Declaration of Dotdigitalgroup\Email\Test\Integration\Model\Sync\Review\ReviewTest::setUp() must be compatible
-    # with PHPUnit\Framework\TestCase::setUp(): void
-    rm -rf vendor/dotmailer/dotmailer-magento2-extension/Test/Integration/
-  fi
-fi
-
 if [ "$FULL_INSTALL" -eq "1" ]; then
   echo "FULL_INSTALL - Installing magento"
 
@@ -121,4 +100,28 @@ if [ "$FULL_INSTALL" -eq "1" ]; then
 
   vendor/bin/n98-magerun2 sys:info
   vendor/bin/n98-magerun2 config:store:get  web/unsecure/base_url
+elif [ -f "/current_extension/composer.json" ]; then
+  # We are not doing a full install, but have an extension, so enable all the modules so that di compile works
+  php bin/magento module:enable --all
+fi
+
+if [ -f "/current_extension/composer.json" ]; then
+  echo "Configuring current extension for integration tests"
+  mysql -hdatabase -uroot -e "create database if not exists magento_integration_tests"
+  cp /home/ampersand/assets/install-config-mysql.php.dist dev/tests/integration/etc/install-config-mysql.php
+  if [[ "$MAGE_VERSION" == 2.3* ]]; then
+    cp /home/ampersand/assets/install-config-mysql-no-search.php.dist dev/tests/integration/etc/install-config-mysql.php
+  fi
+  php /home/ampersand/assets/prepare-phpunit-config.php /var/www/html "$(composer config name -d /current_extension/)" "$INTEGRATION_TESTS_PATH" "$UNIT_TESTS_PATH"
+  php bin/magento setup:di:compile
+
+  if [[ "$MAGE_VERSION" == 2.4.3 ]] || [[ "$MAGE_VERSION" == 2.4.4* ]] || [[ "$MAGE_VERSION" == 2.4.5* ]]; then
+    # Re-running the install process seems to fix this issue https://github.com/magento/magento2/issues/33802
+    composer install --no-interaction
+  fi
+  if [[ "$MAGE_VERSION" == 2.4.0* ]]; then
+    # Declaration of Dotdigitalgroup\Email\Test\Integration\Model\Sync\Review\ReviewTest::setUp() must be compatible
+    # with PHPUnit\Framework\TestCase::setUp(): void
+    rm -rf vendor/dotmailer/dotmailer-magento2-extension/Test/Integration/
+  fi
 fi

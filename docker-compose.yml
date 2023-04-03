@@ -4,7 +4,7 @@ services:
     depends_on:
       - elasticsearch
       - mysql
-    image: ampco/magento-docker-test-instance:0.1.0
+    image: ampco/magento-docker-test-instance:0.1.2
     #uncomment the below and the --build in the Makefile to test changes locally
     #build:
     #  context: ./
