@@ -61,5 +61,5 @@ docker-start:       # Launch docker container
 	docker compose --file=docker-compose.yml pull --quiet
 	docker compose --file=docker-compose.yml down --remove-orphans
 	docker container rm -f mtest-mysql mtest mtest-elasticsearch
-	docker compose --file=docker-compose.yml up --quiet-pull --remove-orphans -d magento --build
+	docker compose --file=docker-compose.yml up --quiet-pull --remove-orphans -d magento #--build
 	docker exec mtest '/home/ampersand/assets/magento-install.sh'
