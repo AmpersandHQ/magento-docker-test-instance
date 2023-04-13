@@ -49,7 +49,8 @@ before_install:
 script:
   - shellcheck bin/*
   - shellcheck Dockerfile-assets/*.sh
-  - if [[ $INTEGRATION = both ]];  then COMPOSER_AFTER_INSTALL_COMMAND='whoami; whoami;' CURRENT_EXTENSION="." FULL_INSTALL=1 ./bin/mtest-make $TEST_GROUP; fi
+  - if [[ $INTEGRATION = both ]];  then COMPOSER_AFTER_INSTALL_COMMAND='touch /tmp/travistest.txt;' CURRENT_EXTENSION="." FULL_INSTALL=1 ./bin/mtest-make $TEST_GROUP; fi
+  - if [[ $INTEGRATION = both ]];  then vendor/bin/mtest 'test -f touch /tmp/travistest.txt'; fi
   - if [[ $INTEGRATION = false ]]; then FULL_INSTALL=1 ./bin/mtest-make $TEST_GROUP; fi
   - if [[ $INTEGRATION = false ]]; then curl --head http://0.0.0.0:1234 | grep 200; fi
   - if [[ $INTEGRATION = false ]]; then ./bin/mtest 'php bin/magento'; fi
