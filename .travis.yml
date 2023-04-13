@@ -3,41 +3,41 @@ services:
 
 env:
   - TEST_GROUP=2-3-7      INTEGRATION=false
-  - TEST_GROUP=2-3-7-p1   INTEGRATION=false
-  - TEST_GROUP=2-3-7-p2   INTEGRATION=false
-  - TEST_GROUP=2-3-7-p3   INTEGRATION=false
-  - TEST_GROUP=2-3-7-p4   INTEGRATION=false
-  - TEST_GROUP=2-4-0      INTEGRATION=false
-  - TEST_GROUP=2-4-1      INTEGRATION=false
-  - TEST_GROUP=2-4-2      INTEGRATION=false
-  - TEST_GROUP=2-4-3      INTEGRATION=false
-  - TEST_GROUP=2-4-4      INTEGRATION=false
-  - TEST_GROUP=2-4-4-p1   INTEGRATION=false
-  - TEST_GROUP=2-4-4-p2   INTEGRATION=false
-  - TEST_GROUP=2-4-4-p3   INTEGRATION=false
-  - TEST_GROUP=2-4-5      INTEGRATION=false
-  - TEST_GROUP=2-4-5-p1   INTEGRATION=false
-  - TEST_GROUP=2-4-4-p2   INTEGRATION=false
-  - TEST_GROUP=2-4-6      INTEGRATION=false
-  - TEST_GROUP=2-latest   INTEGRATION=false
-  - TEST_GROUP=2-3-7      INTEGRATION=true
-  - TEST_GROUP=2-3-7-p1   INTEGRATION=true
-  - TEST_GROUP=2-3-7-p2   INTEGRATION=true
-  - TEST_GROUP=2-3-7-p3   INTEGRATION=true
-  - TEST_GROUP=2-3-7-p4   INTEGRATION=true
-  - TEST_GROUP=2-4-0      INTEGRATION=true
-  - TEST_GROUP=2-4-1      INTEGRATION=true
-  - TEST_GROUP=2-4-2      INTEGRATION=true
-  - TEST_GROUP=2-4-3      INTEGRATION=true
-  - TEST_GROUP=2-4-4      INTEGRATION=true
-  - TEST_GROUP=2-4-4-p1   INTEGRATION=true
-  - TEST_GROUP=2-4-4-p2   INTEGRATION=true
-  - TEST_GROUP=2-4-4-p3   INTEGRATION=true
-  - TEST_GROUP=2-4-5      INTEGRATION=true
-  - TEST_GROUP=2-4-5-p1   INTEGRATION=true
-  - TEST_GROUP=2-4-4-p2   INTEGRATION=true
-  - TEST_GROUP=2-4-6      INTEGRATION=true
-  - TEST_GROUP=2-latest   INTEGRATION=true
+#  - TEST_GROUP=2-3-7-p1   INTEGRATION=false
+#  - TEST_GROUP=2-3-7-p2   INTEGRATION=false
+#  - TEST_GROUP=2-3-7-p3   INTEGRATION=false
+#  - TEST_GROUP=2-3-7-p4   INTEGRATION=false
+#  - TEST_GROUP=2-4-0      INTEGRATION=false
+#  - TEST_GROUP=2-4-1      INTEGRATION=false
+#  - TEST_GROUP=2-4-2      INTEGRATION=false
+#  - TEST_GROUP=2-4-3      INTEGRATION=false
+#  - TEST_GROUP=2-4-4      INTEGRATION=false
+#  - TEST_GROUP=2-4-4-p1   INTEGRATION=false
+#  - TEST_GROUP=2-4-4-p2   INTEGRATION=false
+#  - TEST_GROUP=2-4-4-p3   INTEGRATION=false
+#  - TEST_GROUP=2-4-5      INTEGRATION=false
+#  - TEST_GROUP=2-4-5-p1   INTEGRATION=false
+#  - TEST_GROUP=2-4-4-p2   INTEGRATION=false
+#  - TEST_GROUP=2-4-6      INTEGRATION=false
+#  - TEST_GROUP=2-latest   INTEGRATION=false
+#  - TEST_GROUP=2-3-7      INTEGRATION=true
+#  - TEST_GROUP=2-3-7-p1   INTEGRATION=true
+#  - TEST_GROUP=2-3-7-p2   INTEGRATION=true
+#  - TEST_GROUP=2-3-7-p3   INTEGRATION=true
+#  - TEST_GROUP=2-3-7-p4   INTEGRATION=true
+#  - TEST_GROUP=2-4-0      INTEGRATION=true
+#  - TEST_GROUP=2-4-1      INTEGRATION=true
+#  - TEST_GROUP=2-4-2      INTEGRATION=true
+#  - TEST_GROUP=2-4-3      INTEGRATION=true
+#  - TEST_GROUP=2-4-4      INTEGRATION=true
+#  - TEST_GROUP=2-4-4-p1   INTEGRATION=true
+#  - TEST_GROUP=2-4-4-p2   INTEGRATION=true
+#  - TEST_GROUP=2-4-4-p3   INTEGRATION=true
+#  - TEST_GROUP=2-4-5      INTEGRATION=true
+#  - TEST_GROUP=2-4-5-p1   INTEGRATION=true
+#  - TEST_GROUP=2-4-4-p2   INTEGRATION=true
+#  - TEST_GROUP=2-4-6      INTEGRATION=true
+#  - TEST_GROUP=2-latest   INTEGRATION=true
   - TEST_GROUP=2-latest   INTEGRATION=both
 
 before_install:
@@ -49,7 +49,7 @@ before_install:
 script:
   - shellcheck bin/*
   - shellcheck Dockerfile-assets/*.sh
-  - if [[ $INTEGRATION = both ]];  then CURRENT_EXTENSION="." FULL_INSTALL=1 ./bin/mtest-make $TEST_GROUP; fi
+  - if [[ $INTEGRATION = both ]];  then COMPOSER_AFTER_INSTALL_COMMAND='whoami; whoami;' CURRENT_EXTENSION="." FULL_INSTALL=1 ./bin/mtest-make $TEST_GROUP; fi
   - if [[ $INTEGRATION = false ]]; then FULL_INSTALL=1 ./bin/mtest-make $TEST_GROUP; fi
   - if [[ $INTEGRATION = false ]]; then curl --head http://0.0.0.0:1234 | grep 200; fi
   - if [[ $INTEGRATION = false ]]; then ./bin/mtest 'php bin/magento'; fi

@@ -4,11 +4,11 @@ services:
     depends_on:
       - elasticsearch
       - mysql
-    image: ampco/magento-docker-test-instance:0.1.3
+    #image: ampco/magento-docker-test-instance:0.1.3
     #uncomment the below and the --build in the Makefile to test changes locally
-    #build:
-    #  context: ./
-    #  dockerfile: Dockerfile
+    build:
+      context: ./
+      dockerfile: Dockerfile
     platform: linux/amd64
     container_name: mtest
     volumes:
@@ -33,6 +33,7 @@ services:
       - MYSQL_DATABASE=magento
       - PHP_VERSION=$PHP_VERSION
       - COMPOSER_VERSION=$COMPOSER_VERSION
+      - COMPOSER_AFTER_INSTALL_COMMAND=$COMPOSER_AFTER_INSTALL_COMMAND
       - COMPOSER_REQUIRE_EXTRA=$COMPOSER_REQUIRE_EXTRA
       - INTEGRATION_TESTS_PATH=$INTEGRATION_TESTS_PATH
       - UNIT_TESTS_PATH=$UNIT_TESTS_PATH
