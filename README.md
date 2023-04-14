@@ -34,17 +34,3 @@ You can connect to the container to clear caches, regenerate di, etc
 vendor/bin/mtest-ssh
 ```
 
-### Configuration
-
-We have the following environment variables which can be overridden when running the `./vendor/bin/mtest-make` command
-
-| ENV VAR  	 | Default value	|
-|------------|---------------|
-| `COMPOSER_REPOSITORY` 	 | https://repo-magento-mirror.fooman.co.nz/ |
-| `UNIT_TESTS_PATH`  | src/Test/Unit |
-| `INTEGRATION_TESTS_PATH`	 | 	src/Test/Integration          |
-
-Example: 
-```
-UNIT_TESTS_PATH='Tests/Unit' INTEGRATION_TESTS_PATH='Tests/Integration' CURRENT_EXTENSION="." vendor/bin/mtest-make 2-4-5
-```
