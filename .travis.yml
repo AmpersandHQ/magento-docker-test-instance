@@ -49,7 +49,7 @@ before_install:
 script:
   - shellcheck bin/*
   - shellcheck Dockerfile-assets/*.sh
-  - if [[ $INTEGRATION = both ]];  then composer config --global --auth http-basic.repo.packagist.com token somefaketoken123; fi
+  - if [[ $INTEGRATION = both ]];  then composer config --global --auth http-basic.repo.packagist.com token somefaketoken123; composer config --list --global | grep travis; test -f /home/travis/.composer/auth.json ;fi
   - if [[ $INTEGRATION = both ]];  then COMPOSER_AUTH_JSON_LOCATION=~/.composer/auth.json COMPOSER_AFTER_INSTALL_COMMAND='touch /tmp/travistest.txt;' CURRENT_EXTENSION="." FULL_INSTALL=1 ./bin/mtest-make $TEST_GROUP; fi
   - if [[ $INTEGRATION = both ]];  then ./bin/mtest 'test -f /tmp/travistest.txt'; fi
   - if [[ $INTEGRATION = both ]];  then ./bin/mtest 'grep -C10 somefaketoken123 /home/ampersand/.composer/auth.json'; fi
