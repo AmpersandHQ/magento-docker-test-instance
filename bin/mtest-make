@@ -2,11 +2,11 @@
 set -e
 if [[ -n "${CURRENT_EXTENSION}" ]]; then
   CURRENT_EXTENSION=$(realpath "$CURRENT_EXTENSION")
-  test -d $CURRENT_EXTENSION
+  test -d "$CURRENT_EXTENSION"
 fi
 if [[ -n "${COMPOSER_AUTH_JSON_LOCATION}" ]]; then
   COMPOSER_AUTH_JSON_LOCATION=$(realpath "$COMPOSER_AUTH_JSON_LOCATION")
-  test -f $COMPOSER_AUTH_JSON_LOCATION
+  test -f "$COMPOSER_AUTH_JSON_LOCATION"
 fi
 
 # https://github.com/composer/composer/pull/10402
