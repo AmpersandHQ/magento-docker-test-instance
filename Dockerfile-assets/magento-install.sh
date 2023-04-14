@@ -20,11 +20,6 @@ phpenv global "$PHP_VERSION"
 php --version
 ln -f -s /home/ampersand/.phpenv/bin/"$COMPOSER_VERSION" /home/ampersand/.phpenv/bin/composer && composer --version
 
-set -v
-ls -l /home/ampersand/.composer/
-ls -lasth /home/ampersand/.composer/auth.json
-cat /home/ampersand/.composer/auth.json
-
 echo "Composer - creating project"
 if [ "$MAGE_VERSION" = "0" ]; then
   composer create-project --repository="$COMPOSER_REPOSITORY" magento/project-community-edition /var/www/html --no-install --no-plugins
