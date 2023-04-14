@@ -69,3 +69,16 @@ That will allow you to then browse `http://0.0.0.0:1234/admin` with the credenti
 ## Partial Installation for running unit/integration tests
 
 Please see [this sample module](https://github.com/AmpersandHQ/magento-docker-test-instance/tree/sample) for instructions on how to run your custom integration/unit tests.
+
+### Configuration
+
+We have the following environment variables which can be overridden when running the `./vendor/bin/mtest-make` command
+
+| ENV VAR  	                | Default value/contents	                       | Example                                                                                              | 
+|---------------------------|-----------------------------------------------|------------------------------------------------------------------------------------------------------|
+| `COMPOSER_REPOSITORY` 	   | https://repo-magento-mirror.fooman.co.nz/     | `COMPOSER_REPOSITORY='https://repo.packagist.com/your_our_here/' vendor/bin/mtest-make 2-4-5`        |
+| `UNIT_TESTS_PATH`         | src/Test/Unit                                 | `UNIT_TESTS_PATH='Tests/Unit' vendor/bin/mtest-make 2-4-5`                                           | 
+| `INTEGRATION_TESTS_PATH`	 | 	src/Test/Integration                         | `INTEGRATION_TESTS_PATH='Tests/Integration' vendor/bin/mtest-make 2-4-5`                             | 
+| `COMPOSER_AUTH_JSON_LOCATION`                         | `./Dockerfile-assets/auth.json` contains `{}` | `COMPOSER_AUTH_JSON_LOCATION=~/.composer/auth.json vendor/bin/mtest-make 2-4-5`                      | 
+ | `COMPOSER_REQUIRE_EXTRA` |                                               | `COMPOSER_REQUIRE_EXTRA='some/suggested-module another/suggested-module' vendor/bin/mtest-make 2-4-5` |
+ | `COMPOSER_AFTER_INSTALL_COMMAND` |                                               | `COMPOSER_AFTER_INSTALL_COMMAND='cp foo.txt bar.txt' vendor/bin/mtest-make 2-4-5`                    | 
