@@ -4,7 +4,7 @@ services:
     depends_on:
       - elasticsearch
       - mysql
-    image: ampco/magento-docker-test-instance:0.1.4
+    image: ampco/magento-docker-test-instance:0.1.5
     #uncomment the below and the --build in the Makefile to test changes locally
     #build:
     #  context: ./
@@ -12,7 +12,10 @@ services:
     platform: linux/amd64
     container_name: mtest
     volumes:
+      # Mount in these assets instead of baking them into the image for easier maintenance of this tool
+      - "./Dockerfile-assets:/home/ampersand/assets"
       - "$CURRENT_EXTENSION:/current_extension/"
+      - "$COMPOSER_AUTH_JSON_LOCATION:/home/ampersand/.composer/auth.json:ro"
     healthcheck:
       test: [ "CMD", "mysql", "-hdatabase", "-e", "'select 1'" ]
       interval: 1m30s

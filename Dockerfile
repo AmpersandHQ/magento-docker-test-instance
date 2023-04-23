@@ -16,7 +16,4 @@ RUN rm /home/ampersand/.phpenv/versions/*/etc/conf.d/xdebug.ini
 RUN a2enmod rewrite actions alias headers proxy proxy_fcgi proxy_http expires ssl
 
 WORKDIR /home/ampersand
-RUN mkdir -p /home/ampersand/assets
-COPY Dockerfile-assets/* /home/ampersand/assets
-RUN chown -R ampersand:ampersand /home/ampersand/assets
 USER ampersand
