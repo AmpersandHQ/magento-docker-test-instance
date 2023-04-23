@@ -4,6 +4,9 @@ source /home/ampersand/.bashrc
 set -euo pipefail
 cd /var/www/html
 
+echo "test"
+false
+
 COMPOSER_REPOSITORY=${COMPOSER_REPOSITORY:-https://repo-magento-mirror.fooman.co.nz/}
 FULL_INSTALL=${FULL_INSTALL:-0}
 BASE_DOMAIN="0.0.0.0:$MAGENTO_PORT"
