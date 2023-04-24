@@ -11,6 +11,7 @@ BASE_URL="http://$BASE_DOMAIN"
 MAGE_VERSION=${MAGE_VERSION:-0}
 TWOFACTOR_ENABLED=${TWOFACTOR_ENABLED:-0}
 ELASTICSEARCH_OPTIONS=${ELASTICSEARCH_OPTIONS:-}
+COMPOSER_INSTALL_VERBOSE=${COMPOSER_INSTALL_VERBOSE:-0}
 COMPOSER_REQUIRE_EXTRA=${COMPOSER_REQUIRE_EXTRA:-0}
 COMPOSER_AFTER_INSTALL_COMMAND=${COMPOSER_AFTER_INSTALL_COMMAND:-0}
 INTEGRATION_TESTS_PATH=${INTEGRATION_TESTS_PATH:-'src/Test/Integration'}
@@ -67,9 +68,18 @@ if [[ "$MAGE_VERSION" == "2.4.4" ]]; then
 fi
 
 echo "Composer - installation"
+if [ "$COMPOSER_VERSION" = "composer1" ]; then
+  echo "Setting COMPOSER_PROCESS_TIMEOUT=1200"
+  export COMPOSER_PROCESS_TIMEOUT=0
+fi
 cat composer.json
 export COMPOSER_MEMORY_LIMIT=-1
-composer install
+
+if [ "$COMPOSER_INSTALL_VERBOSE" = "1" ]; then
+  composer install --no-interaction -vvv
+else
+  composer install --no-interaction
+fi
 
 if [ ! "$COMPOSER_AFTER_INSTALL_COMMAND" = "0" ]; then
   echo "running after install command $COMPOSER_AFTER_INSTALL_COMMAND"
