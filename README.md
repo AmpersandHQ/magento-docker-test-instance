@@ -82,3 +82,4 @@ We have the following environment variables which can be overridden when running
 | `COMPOSER_AUTH_JSON_LOCATION`                         | `./Dockerfile-assets/auth.json` contains `{}` | `COMPOSER_AUTH_JSON_LOCATION=~/.composer/auth.json vendor/bin/mtest-make 2-4-5`                       | 
  | `COMPOSER_REQUIRE_EXTRA` |                                               | `COMPOSER_REQUIRE_EXTRA='some/suggested-module another/suggested-module' vendor/bin/mtest-make 2-4-5` |
  | `COMPOSER_AFTER_INSTALL_COMMAND` |                                               | `COMPOSER_AFTER_INSTALL_COMMAND='cp foo.txt bar.txt' vendor/bin/mtest-make 2-4-5`                     | 
+ | `TWOFACTOR_ENABLED` | 0 | Whether the magento 2fa modules are enabled by default, can be `1` or `0`                    |
