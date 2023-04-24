@@ -9,6 +9,7 @@ FULL_INSTALL=${FULL_INSTALL:-0}
 BASE_DOMAIN="0.0.0.0:$MAGENTO_PORT"
 BASE_URL="http://$BASE_DOMAIN"
 MAGE_VERSION=${MAGE_VERSION:-0}
+TWOFACTOR_ENABLED=${TWOFACTOR_ENABLED:-0}
 ELASTICSEARCH_OPTIONS=${ELASTICSEARCH_OPTIONS:-}
 COMPOSER_REQUIRE_EXTRA=${COMPOSER_REQUIRE_EXTRA:-0}
 COMPOSER_AFTER_INSTALL_COMMAND=${COMPOSER_AFTER_INSTALL_COMMAND:-0}
@@ -107,8 +108,10 @@ if [ "$FULL_INSTALL" -eq "1" ]; then
 
   php bin/magento deploy:mode:set developer
 
-  echo "Disabling 2fa modules"
-  php bin/magento module:disable Magento_TwoFactorAuth || php bin/magento module:disable Magento_AdminAdobeImsTwoFactorAuth Magento_TwoFactorAuth || true
+  if [ ! "$TWOFACTOR_ENABLED" = "1" ]; then
+    echo "Disabling 2fa modules"
+    php bin/magento module:disable Magento_TwoFactorAuth || php bin/magento module:disable Magento_AdminAdobeImsTwoFactorAuth Magento_TwoFactorAuth || true
+  fi
 
   vendor/bin/n98-magerun2 sys:info
   vendor/bin/n98-magerun2 config:store:get  web/unsecure/base_url
