@@ -69,8 +69,9 @@ fi
 
 echo "Composer - installation"
 if [ "$COMPOSER_VERSION" = "composer1" ]; then
-  echo "Setting COMPOSER_PROCESS_TIMEOUT=1200"
-  export COMPOSER_PROCESS_TIMEOUT=0
+  echo "Setting COMPOSER_PROCESS_TIMEOUT"
+  composer config --global process-timeout 1200
+  composer config process-timeout 1200
 fi
 cat composer.json
 export COMPOSER_MEMORY_LIMIT=-1
