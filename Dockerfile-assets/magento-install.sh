@@ -31,7 +31,6 @@ composer config --no-interaction allow-plugins.dealerdirect/phpcodesniffer-compo
 composer config --no-interaction allow-plugins.laminas/laminas-dependency-plugin true || true
 composer config --no-interaction allow-plugins.magento/* true || true
 composer config --unset repo.0
-composer config repo.composerrepository composer "$COMPOSER_REPOSITORY"
 composer config minimum-stability dev
 composer config prefer-stable true
 
@@ -40,12 +39,13 @@ if [ -f "/current_extension/composer.json" ]; then
   composer config "repositories.current_extension" "{\"type\": \"path\", \"canonical\":true, \"url\": \"/current_extension/\", \"options\": {\"symlink\":true}}"
   PACKAGE_NAME=$(composer config name -d /current_extension/);
   composer require "$PACKAGE_NAME":'*' --no-interaction --no-update
-  if [ "$COMPOSER_VERSION" = "composer1" ]; then
-    # prevent the module under test from being seen in packagist.org as well as local symlink
-    composer config "repositories.packagist_org" "{\"type\": \"composer\", \"url\": \"https://packagist.org\", \"exclude\": [\"$PACKAGE_NAME\"]}"
-    composer config repositories.packagist false
-  fi
+
+  # prevent the module under test from being seen in packagist.org as well as local symlink
+  composer config "repositories.packagist_org" "{\"type\": \"composer\", \"url\": \"https://packagist.org\", \"exclude\": [\"$PACKAGE_NAME\", \"magento/module-*\", \"magento/framework*\", \"magento/language*\", \"magento/magento2-base\", \"magento/theme*\"]}"
+  composer config repositories.packagist false
 fi
+
+composer config repo.composerrepository composer "$COMPOSER_REPOSITORY"
 
 echo "Composer - requiring n98/magerun2"
 composer require n98/magerun2:"*" --dev --no-interaction --no-update
