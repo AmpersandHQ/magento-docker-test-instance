@@ -42,7 +42,7 @@ if [ -f "/current_extension/composer.json" ]; then
   composer require "$PACKAGE_NAME":'*' --no-interaction --no-update
 
   # prevent the module under test from being seen in packagist.org as well as local symlink
-  composer config "repositories.packagist_org" "{\"type\": \"composer\", \"url\": \"https://packagist.org\", \"exclude\": [\"$PACKAGE_NAME\", \"magento/*\"]}"
+  composer config "repositories.packagist_org" "{\"type\": \"composer\", \"url\": \"https://packagist.org\", \"exclude\": [\"$PACKAGE_NAME\", \"magento/module-*\", \"magento/framework*\", \"magento/language*\", \"magento/magento2-base\", \"magento/theme*\", \"magento/zendframework1\"]}"
   composer config repositories.packagist false
 fi
 
