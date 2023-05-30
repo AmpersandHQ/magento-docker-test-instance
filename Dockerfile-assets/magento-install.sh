@@ -69,7 +69,14 @@ fi
 echo "Composer - installation"
 cat composer.json
 export COMPOSER_MEMORY_LIMIT=-1
-composer install
+if composer install --no-interaction; then
+  echo "COMPOSER_INSTALL_TRY_1=PASS"
+elif rm -rf vendor && composer install --no-interaction; then
+  echo "COMPOSER_INSTALL_TRY_2=PASS"
+else
+  echo "COMPOSER_INSTALL_TRY_2=FAIL"
+  false
+fi
 
 if [ ! "$COMPOSER_AFTER_INSTALL_COMMAND" = "0" ]; then
   echo "running after install command $COMPOSER_AFTER_INSTALL_COMMAND"
