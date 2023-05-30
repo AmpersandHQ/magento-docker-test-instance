@@ -40,11 +40,10 @@ if [ -f "/current_extension/composer.json" ]; then
   composer config "repositories.current_extension" "{\"type\": \"path\", \"canonical\":true, \"url\": \"/current_extension/\", \"options\": {\"symlink\":true}}"
   PACKAGE_NAME=$(composer config name -d /current_extension/);
   composer require "$PACKAGE_NAME":'*' --no-interaction --no-update
-  if [ "$COMPOSER_VERSION" = "composer1" ]; then
-    # prevent the module under test from being seen in packagist.org as well as local symlink
-    composer config "repositories.packagist_org" "{\"type\": \"composer\", \"url\": \"https://packagist.org\", \"exclude\": [\"$PACKAGE_NAME\"]}"
-    composer config repositories.packagist false
-  fi
+
+  # prevent the module under test from being seen in packagist.org as well as local symlink
+  composer config "repositories.packagist_org" "{\"type\": \"composer\", \"url\": \"https://packagist.org\", \"exclude\": [\"$PACKAGE_NAME\", \"magento/*\"]}"
+  composer config repositories.packagist false
 fi
 
 echo "Composer - requiring n98/magerun2"
