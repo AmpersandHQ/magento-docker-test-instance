@@ -31,7 +31,6 @@ composer config --no-interaction allow-plugins.dealerdirect/phpcodesniffer-compo
 composer config --no-interaction allow-plugins.laminas/laminas-dependency-plugin true || true
 composer config --no-interaction allow-plugins.magento/* true || true
 composer config --unset repo.0
-composer config repo.composerrepository composer "$COMPOSER_REPOSITORY"
 composer config minimum-stability dev
 composer config prefer-stable true
 
@@ -45,6 +44,8 @@ if [ -f "/current_extension/composer.json" ]; then
   composer config "repositories.packagist_org" "{\"type\": \"composer\", \"url\": \"https://packagist.org\", \"exclude\": [\"$PACKAGE_NAME\", \"magento/module-*\", \"magento/framework*\", \"magento/language*\", \"magento/magento2-base\", \"magento/theme*\", \"magento/zendframework1\"]}"
   composer config repositories.packagist false
 fi
+
+composer config repo.composerrepository composer "$COMPOSER_REPOSITORY"
 
 echo "Composer - requiring n98/magerun2"
 composer require n98/magerun2:"*" --dev --no-interaction --no-update
