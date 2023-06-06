@@ -3,11 +3,6 @@ list: 					        # Lists all available commands
 
 CURRENT_EXTENSION ?= '/dev/null'
 COMPOSER_AUTH_JSON_LOCATION ?= './Dockerfile-assets/auth.json'
-ifeq ($(CURRENT_EXTENSION), '/dev/null')
- CURRENT_EXTENSION_VENDOR='/tmp/current_extension_vendor/'
-else
- CURRENT_EXTENSION_VENDOR='/current_extension/vendor/'
-endif
 
 2-3-7:			 # Launch 2.3.7
 	MAGE_VERSION="2.3.7" PHP_VERSION='7.4.29' COMPOSER_VERSION='composer22' MYSQL_VERSION="mysql:5.7.41-debian" ELASTICSEARCH_VERSION='docker.elastic.co/elasticsearch/elasticsearch:7.9.0' ELASTICSEARCH_OPTIONS='' MAGENTO_PORT=1234 CURRENT_EXTENSION=$(CURRENT_EXTENSION)  CURRENT_EXTENSION_VENDOR=$(CURRENT_EXTENSION_VENDOR) COMPOSER_AUTH_JSON_LOCATION=$(COMPOSER_AUTH_JSON_LOCATION) make docker-start
