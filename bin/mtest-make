@@ -1,8 +1,11 @@
 #!/bin/bash
 set -e
+export CURRENT_EXTENSION_VENDOR=/tmp/current_extension_vendor/
+
 if [[ -n "${CURRENT_EXTENSION}" ]]; then
   CURRENT_EXTENSION=$(realpath "$CURRENT_EXTENSION")
   test -d "$CURRENT_EXTENSION"
+  export CURRENT_EXTENSION_VENDOR=/current_extension/vendor/
 fi
 if [[ -n "${COMPOSER_AUTH_JSON_LOCATION}" ]]; then
   COMPOSER_AUTH_JSON_LOCATION=$(realpath "$COMPOSER_AUTH_JSON_LOCATION")
