@@ -43,7 +43,7 @@ if [ -f "/current_extension/composer.json" ]; then
   # prevent the module under test from being seen in packagist.org as well as local symlink
   composer config "repositories.packagist_org" "{\"type\": \"composer\", \"url\": \"https://packagist.org\", \"exclude\": [\"$PACKAGE_NAME\", \"magento/module-*\", \"magento/framework*\", \"magento/language*\", \"magento/magento2-base\", \"magento/theme*\"]}"
   composer config repositories.packagist false
-  composer config repo.composerrepository composer "$COMPOSER_REPOSITORY" "{\"type\": \"composer\", \"url\": \"$COMPOSER_REPOSITORY\", \"exclude\": [\"$PACKAGE_NAME\"]}"
+  composer config repo.composerrepository "{\"type\": \"composer\", \"url\": \"$COMPOSER_REPOSITORY\", \"exclude\": [\"$PACKAGE_NAME\"]}"
 else
   composer config repo.composerrepository composer "$COMPOSER_REPOSITORY"
 fi
