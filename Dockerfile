@@ -16,6 +16,6 @@ WORKDIR /home/ampersand
 USER ampersand
 
 # Disable xdebug for performance
-RUN for ver in $(phpenv versions --bare); do printf "\nxdebug.mode=debug\nxdebug.client_host=docker.for.mac.localhost\nxdebug.client_port=901\nxdebug.idekey=PHPSTORM\n" >> /home/ampersand/.phpenv/versions/$ver/etc/conf.d/xdebug.ini ; done
+RUN for ver in $(phpenv versions --bare); do printf "\nxdebug.mode=debug\nxdebug.client_host=docker.for.mac.localhost\nxdebug.client_port=9010\nxdebug.idekey=PHPSTORM\n" >> /home/ampersand/.phpenv/versions/$ver/etc/conf.d/xdebug.ini ; done
 RUN for ver in $(phpenv versions --bare); do mkdir /home/ampersand/.phpenv/versions/$ver/etc/conf.d_disabled/; done
 RUN for ver in $(phpenv versions --bare); do mv /home/ampersand/.phpenv/versions/$ver/etc/conf.d/xdebug.ini /home/ampersand/.phpenv/versions/$ver/etc/conf.d_disabled/; done
