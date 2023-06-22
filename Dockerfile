@@ -10,10 +10,12 @@ RUN rm /var/www/html/index.html && chown -R ampersand:www-data /var/www/html && 
 
 RUN sed -i 's/nobody/ampersand/' /home/ampersand/.phpenv/versions/8.2.2/etc/php-fpm.d/www.conf && sed -i 's/nobody/ampersand/' /home/ampersand/.phpenv/versions/8.1.6/etc/php-fpm.d/www.conf && sed -i 's/nobody/ampersand/' /home/ampersand/.phpenv/versions/7.4.29/etc/php-fpm.d/www.conf
 
-# Disable xdebug for performance
-RUN rm /home/ampersand/.phpenv/versions/*/etc/conf.d/xdebug.ini
-
 RUN a2enmod rewrite actions alias headers proxy proxy_fcgi proxy_http expires ssl
 
 WORKDIR /home/ampersand
 USER ampersand
+
+# Disable xdebug for performance
+RUN for ver in $(phpenv versions --bare); do printf "\nxdebug.mode=debug\nxdebug.client_host=docker.for.mac.localhost\nxdebug.client_port=9010\nxdebug.idekey=PHPSTORM\n" >> /home/ampersand/.phpenv/versions/$ver/etc/conf.d/xdebug.ini ; done
+RUN for ver in $(phpenv versions --bare); do mkdir /home/ampersand/.phpenv/versions/$ver/etc/conf.d_disabled/; done
+RUN for ver in $(phpenv versions --bare); do mv /home/ampersand/.phpenv/versions/$ver/etc/conf.d/xdebug.ini /home/ampersand/.phpenv/versions/$ver/etc/conf.d_disabled/; done

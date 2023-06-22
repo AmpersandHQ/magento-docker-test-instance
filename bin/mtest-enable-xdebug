@@ -1,0 +1,6 @@
+#!/bin/bash
+if ! docker exec mtest '/home/ampersand/assets/command.sh' 'php --ini | grep xdebug'; then
+  echo "enabling xdebug"
+  docker exec mtest '/home/ampersand/assets/command.sh' 'for ver in $(phpenv versions --bare); do mv /home/ampersand/.phpenv/versions/$ver/etc/conf.d_disabled/xdebug.ini /home/ampersand/.phpenv/versions/$ver/etc/conf.d/; done'
+fi
+docker exec mtest '/home/ampersand/assets/command.sh' 'php --ini | grep xdebug'

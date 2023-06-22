@@ -83,3 +83,12 @@ We have the following environment variables which can be overridden when running
  | `COMPOSER_REQUIRE_EXTRA` |                                               | `COMPOSER_REQUIRE_EXTRA='some/suggested-module another/suggested-module' vendor/bin/mtest-make 2-4-5` |
  | `COMPOSER_AFTER_INSTALL_COMMAND` |                                               | `COMPOSER_AFTER_INSTALL_COMMAND='cp foo.txt bar.txt' vendor/bin/mtest-make 2-4-5`                     | 
  | `TWOFACTOR_ENABLED` | 0 | Whether the magento 2fa modules are enabled by default, can be `1` or `0`                    |
+
+# XDEBUG
+
+```bash
+# this will allow xdebug on port 9010 and docker.for.mac.localhost
+./vendor/bin/mtest-enable-xdebug 
+```
+
+You can configure in the docker container `/home/ampersand/.phpenv/versions/*/etc/conf.d/xdebug.ini` for your own set up, preconfigured for use at Ampersand.
