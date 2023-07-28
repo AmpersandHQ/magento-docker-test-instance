@@ -138,7 +138,7 @@ if [ -f "/current_extension/composer.json" ]; then
   php /home/ampersand/assets/prepare-phpunit-config.php /var/www/html "$(composer config name -d /current_extension/)" "$INTEGRATION_TESTS_PATH" "$UNIT_TESTS_PATH"
   php bin/magento setup:di:compile
 
-  if [[ "$MAGE_VERSION" == 2.4.3 ]] || [[ "$MAGE_VERSION" == 2.4.4* ]] || [[ "$MAGE_VERSION" == 2.4.5* ]] || [[ "$MAGE_VERSION" == 2.4.7* ]]; then
+  if [[ "$MAGE_VERSION" == 2.4.3 ]] || [[ "$MAGE_VERSION" == 2.4.4* ]] || [[ "$MAGE_VERSION" == 2.4.5* ]] || [[ "$MAGE_VERSION" == 2.4.7* ]] || [[ "$MAGE_VERSION" == 2.4.6-p2 ]]; then
     # Re-running the install process seems to fix this issue https://github.com/magento/magento2/issues/33802
     composer install --no-interaction
   fi
