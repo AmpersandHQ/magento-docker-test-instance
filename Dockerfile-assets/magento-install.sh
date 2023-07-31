@@ -137,6 +137,9 @@ if [ -f "/current_extension/composer.json" ]; then
   fi
   php /home/ampersand/assets/prepare-phpunit-config.php /var/www/html "$(composer config name -d /current_extension/)" "$INTEGRATION_TESTS_PATH" "$UNIT_TESTS_PATH"
   php bin/magento setup:di:compile
+  if [ ! "$FULL_INSTALL" -eq "1" ]; then
+    rm -f app/etc/env.php
+  f
 
   if [[ "$MAGE_VERSION" == 2.4.3 ]] || [[ "$MAGE_VERSION" == 2.4.4* ]] || [[ "$MAGE_VERSION" == 2.4.5* ]] || [[ "$MAGE_VERSION" == 2.4.7* ]] || [[ "$MAGE_VERSION" == 2.4.6-p2 ]]; then
     # Re-running the install process seems to fix this issue https://github.com/magento/magento2/issues/33802
