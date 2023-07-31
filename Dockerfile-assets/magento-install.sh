@@ -141,7 +141,7 @@ if [ -f "/current_extension/composer.json" ]; then
     echo "Removing app/etc/env.php"
     cat app/etc/env.php
     rm -f app/etc/env.php # https://github.com/magento/magento2/issues/37805#issuecomment-1658555063
-  f
+  fi
 
   if [[ "$MAGE_VERSION" == 2.4.3 ]] || [[ "$MAGE_VERSION" == 2.4.4* ]] || [[ "$MAGE_VERSION" == 2.4.5* ]] || [[ "$MAGE_VERSION" == 2.4.7* ]] || [[ "$MAGE_VERSION" == 2.4.6-p2 ]]; then
     # Re-running the install process seems to fix this issue https://github.com/magento/magento2/issues/33802
