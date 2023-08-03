@@ -79,11 +79,6 @@ else
   false
 fi
 
-if [ "$MAGE_VERSION" = "0" ]; then
-  # allows us to handle edge cases in latest version by version number
-  MAGE_VERSION=$(php bin/magento --version | awk '{ print $3 }')
-fi
-
 if [ ! "$COMPOSER_AFTER_INSTALL_COMMAND" = "0" ]; then
   echo "running after install command $COMPOSER_AFTER_INSTALL_COMMAND"
   eval "$COMPOSER_AFTER_INSTALL_COMMAND"
@@ -134,6 +129,11 @@ elif [ -f "/current_extension/composer.json" ]; then
 fi
 
 if [ -f "/current_extension/composer.json" ]; then
+  if [ "$MAGE_VERSION" = "0" ]; then
+    # allows us to handle edge cases in latest version by version number
+    MAGE_VERSION=$(php bin/magento --version | awk '{ print $3 }')
+  fi
+
   echo "Configuring current extension for integration tests"
   mysql -hdatabase -uroot -e "create database if not exists magento_integration_tests"
   cp /home/ampersand/assets/install-config-mysql.php.dist dev/tests/integration/etc/install-config-mysql.php
