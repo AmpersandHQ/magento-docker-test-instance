@@ -74,15 +74,16 @@ Please see [this sample module](https://github.com/AmpersandHQ/magento-docker-te
 
 We have the following environment variables which can be overridden when running the `./vendor/bin/mtest-make` command
 
-| ENV VAR  	                | Default value/contents	                       | Example                                                                                               | 
-|---------------------------|-----------------------------------------------|-------------------------------------------------------------------------------------------------------|
-| `COMPOSER_REPOSITORY` 	   | https://repo-magento-mirror.fooman.co.nz/     | `COMPOSER_REPOSITORY='https://repo.packagist.com/your_org_here/' vendor/bin/mtest-make 2-4-5`         |
-| `UNIT_TESTS_PATH`         | src/Test/Unit                                 | `UNIT_TESTS_PATH='Tests/Unit' vendor/bin/mtest-make 2-4-5`                                            | 
-| `INTEGRATION_TESTS_PATH`	 | 	src/Test/Integration                         | `INTEGRATION_TESTS_PATH='Tests/Integration' vendor/bin/mtest-make 2-4-5`                              | 
-| `COMPOSER_AUTH_JSON_LOCATION`                         | `./Dockerfile-assets/auth.json` contains `{}` | `COMPOSER_AUTH_JSON_LOCATION=~/.composer/auth.json vendor/bin/mtest-make 2-4-5`                       | 
- | `COMPOSER_REQUIRE_EXTRA` |                                               | `COMPOSER_REQUIRE_EXTRA='some/suggested-module another/suggested-module' vendor/bin/mtest-make 2-4-5` |
+| ENV VAR  	                       | Default value/contents	                       | Example                                                                                               | 
+|----------------------------------|-----------------------------------------------|-------------------------------------------------------------------------------------------------------|
+| `COMPOSER_REPOSITORY` 	          | https://repo-magento-mirror.fooman.co.nz/     | `COMPOSER_REPOSITORY='https://repo.packagist.com/your_org_here/' vendor/bin/mtest-make 2-4-5`         |
+| `UNIT_TESTS_PATH`                | src/Test/Unit                                 | `UNIT_TESTS_PATH='Tests/Unit' vendor/bin/mtest-make 2-4-5`                                            | 
+| `INTEGRATION_TESTS_PATH`	        | 	src/Test/Integration                         | `INTEGRATION_TESTS_PATH='Tests/Integration' vendor/bin/mtest-make 2-4-5`                              | 
+| `COMPOSER_MODULE_SYMLINK`	       | 	1                                            | `COMPOSER_MODULE_SYMLINK=0 vendor/bin/mtest-make 2-4-5`                                                      | 
+| `COMPOSER_AUTH_JSON_LOCATION`    | `./Dockerfile-assets/auth.json` contains `{}` | `COMPOSER_AUTH_JSON_LOCATION=~/.composer/auth.json vendor/bin/mtest-make 2-4-5`                       | 
+ | `COMPOSER_REQUIRE_EXTRA`         |                                               | `COMPOSER_REQUIRE_EXTRA='some/suggested-module another/suggested-module' vendor/bin/mtest-make 2-4-5` |
  | `COMPOSER_AFTER_INSTALL_COMMAND` |                                               | `COMPOSER_AFTER_INSTALL_COMMAND='cp foo.txt bar.txt' vendor/bin/mtest-make 2-4-5`                     | 
- | `TWOFACTOR_ENABLED` | 0 | Whether the magento 2fa modules are enabled by default, can be `1` or `0`                    |
+ | `TWOFACTOR_ENABLED`              | 0                                             | Whether the magento 2fa modules are enabled by default, can be `1` or `0`                             |
 
 # XDEBUG
 

@@ -6,6 +6,7 @@ cd /var/www/html
 
 COMPOSER_REPOSITORY=${COMPOSER_REPOSITORY:-https://repo-magento-mirror.fooman.co.nz/}
 FULL_INSTALL=${FULL_INSTALL:-0}
+COMPOSER_MODULE_SYMLINK=${COMPOSER_MODULE_SYMLINK:-1}
 BASE_DOMAIN="0.0.0.0:$MAGENTO_PORT"
 BASE_URL="http://$BASE_DOMAIN"
 MAGE_VERSION=${MAGE_VERSION:-0}
@@ -36,7 +37,11 @@ composer config prefer-stable true
 
 if [ -f "/current_extension/composer.json" ]; then
   echo "Composer - adding current extension"
-  composer config "repositories.current_extension" "{\"type\": \"path\", \"canonical\":true, \"url\": \"/current_extension/\", \"options\": {\"symlink\":true}}"
+  if [ "$COMPOSER_MODULE_SYMLINK" -eq "1" ]; then
+    composer config "repositories.current_extension" "{\"type\": \"path\", \"canonical\":true, \"url\": \"/current_extension/\", \"options\": {\"symlink\":true}}"
+  else
+    composer config "repositories.current_extension" "{\"type\": \"path\", \"canonical\":true, \"url\": \"/current_extension/\", \"options\": {\"symlink\":false}}"
+  fi
   PACKAGE_NAME=$(composer config name -d /current_extension/);
   composer require "$PACKAGE_NAME":'*' --no-interaction --no-update
 
