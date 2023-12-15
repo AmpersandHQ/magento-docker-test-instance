@@ -1,4 +1,4 @@
-FROM ampco/magento-docker-test-instance:php-latest
+FROM ampco/magento-docker-test-instance:php-2023-12-07
 SHELL ["/bin/bash", "-c"]
 
 USER root

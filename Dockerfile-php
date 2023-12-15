@@ -14,6 +14,7 @@ RUN echo 'eval "$(phpenv init -)"' >> /home/ampersand/.bashrc
 ENV PATH="/home/ampersand/.phpenv/shims:/home/ampersand/.phpenv/bin:$PATH"
 
 # PHP
+RUN PHP_BUILD_CONFIGURE_OPTS="--with-freetype --with-sodium" phpenv install 8.3.0  && phpenv global 8.3.0  && sed -i 's/memory_limit = 128M/memory_limit = 4096M/' /home/ampersand/.phpenv/versions/8.3.0/etc/php.ini && php --version
 RUN PHP_BUILD_CONFIGURE_OPTS="--with-freetype --with-sodium" phpenv install 8.2.2  && phpenv global 8.2.2  && sed -i 's/memory_limit = 128M/memory_limit = 4096M/' /home/ampersand/.phpenv/versions/8.2.2/etc/php.ini && php --version
 RUN PHP_BUILD_CONFIGURE_OPTS="--with-freetype --with-sodium" phpenv install 8.1.6  && phpenv global 8.1.6  && sed -i 's/memory_limit = 128M/memory_limit = 4096M/' /home/ampersand/.phpenv/versions/8.1.6/etc/php.ini && php --version
 RUN PHP_BUILD_CONFIGURE_OPTS="--with-freetype" phpenv install 7.4.29 && phpenv global 7.4.29 && sed -i 's/memory_limit = 128M/memory_limit = 4096M/' /home/ampersand/.phpenv/versions/7.4.29/etc/php.ini && php --version
