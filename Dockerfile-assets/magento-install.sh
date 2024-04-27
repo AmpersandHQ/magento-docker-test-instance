@@ -67,9 +67,18 @@ if [[ "$MAGE_VERSION" == 2.4.2* ]]; then
   composer config platform.ext-sodium 2.0.22
 fi
 
-# fix test compatability with old monolog
+# fix test compatability with old monolog, as well as preventing newer dependencies being installed on old versions
+# these newer dependencies implement ResetAfterRequestInterface which is not available in 2.4.4
 if [[ "$MAGE_VERSION" == "2.4.4" ]]; then
   composer require --no-update monolog/monolog:"<2.7.0"
+  composer require --no-update magento/module-inventory:"<1.2.5"
+  composer require --no-update magento/module-re-captcha-webapi-graph-ql:"<1.0.3"
+  composer require --no-update magento/module-inventory-reservations:"<1.2.3"
+  composer require --no-update magento/module-inventory-import-export:"<1.2.5"
+  composer require --no-update magento/module-inventory-configuration:"<1.2.4"
+  composer require --no-update magento/module-re-captcha-webapi-graph-ql:"<1.0.3"
+  composer require --no-update magento/module-re-captcha-version-3-invisible:"<2.0.4"
+  composer require --no-update magento/module-re-captcha-ui:"<1.1.4"
 fi
 
 echo "Composer - installation"
