@@ -54,7 +54,7 @@ else
 fi
 
 echo "Composer - requiring n98/magerun2"
-composer require n98/magerun2:"*" --dev --no-interaction --no-update
+composer require n98/magerun2-dist:"*" --dev --no-interaction --no-update
 
 if [ ! "$COMPOSER_REQUIRE_EXTRA" = "0" ]; then
   echo "Composer - requiring $COMPOSER_REQUIRE_EXTRA"
