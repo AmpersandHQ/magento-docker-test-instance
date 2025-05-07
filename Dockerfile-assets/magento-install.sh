@@ -154,6 +154,9 @@ if [ -f "/current_extension/composer.json" ]; then
   if [[ "$MAGE_VERSION" == 2.3* ]]; then
     cp /home/ampersand/assets/install-config-mysql-no-search.php.dist dev/tests/integration/etc/install-config-mysql.php
   fi
+  if [[ "$MAGE_VERSION" == 2.4.8* ]]; then
+    cp /home/ampersand/assets/install-config-mysql-es8.php.dist dev/tests/integration/etc/install-config-mysql.php
+  fi
   php /home/ampersand/assets/prepare-phpunit-config.php /var/www/html "$(composer config name -d /current_extension/)" "$INTEGRATION_TESTS_PATH" "$UNIT_TESTS_PATH"
   php bin/magento setup:di:compile
   if [ ! "$FULL_INSTALL" -eq "1" ]; then
