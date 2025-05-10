@@ -53,6 +53,7 @@ services:
     image: $ELASTICSEARCH_VERSION
     environment:
       - discovery.type=single-node
+      - xpack.security.enabled=false
   mysql:
     container_name: mtest-mysql
     image: $MYSQL_VERSION
