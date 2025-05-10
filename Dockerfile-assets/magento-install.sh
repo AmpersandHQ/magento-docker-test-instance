@@ -93,6 +93,11 @@ else
   false
 fi
 
+# Apply https://experienceleague.adobe.com/en/docs/commerce-operations/tools/quality-patches-tool/patches-available-in-qpt/v1-1-50/acsd-59280-fix-for-reflection-union-type-error
+if [[ "$MAGE_VERSION" == 2.4.4-p* ]]; then
+  curl https://raw.githubusercontent.com/magento/quality-patches/refs/heads/master/patches/os/ACSD-59280_2.4.4-p6.patch | patch -p1
+fi
+
 if [ ! "$COMPOSER_AFTER_INSTALL_COMMAND" = "0" ]; then
   echo "running after install command $COMPOSER_AFTER_INSTALL_COMMAND"
   eval "$COMPOSER_AFTER_INSTALL_COMMAND"
