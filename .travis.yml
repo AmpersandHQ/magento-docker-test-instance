@@ -81,7 +81,7 @@ script:
   - if [[ $INTEGRATION = true ]]; then cd tests/Ampersand_HelloWorld; fi
   - if [[ $INTEGRATION = true ]]; then composer install --no-interaction -vvv; fi
   - if [[ $INTEGRATION = true ]]; then CURRENT_EXTENSION="." vendor/bin/mtest-make $TEST_GROUP ; fi
-  - if [[ $INTEGRATION = true ]]; then vendor/bin/mtest 'vendor/bin/phpunit -c /var/www/html/dev/tests/unit/phpunit.xml.dist        --testsuite Unit --debug' ; fi
+  - if [[ $INTEGRATION = true ]]; then vendor/bin/mtest 'cd dev/tests/unit && ../../../vendor/bin/phpunit -c phpunit.xml.dist --testsuite Unit --debug' ; fi
   - if [[ $INTEGRATION = true ]]; then vendor/bin/mtest 'vendor/bin/phpunit -c /var/www/html/dev/tests/integration/phpunit.xml.dist --testsuite Integration --debug' ; fi
 
 after_failure:
