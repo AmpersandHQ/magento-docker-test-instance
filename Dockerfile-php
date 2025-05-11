@@ -1,4 +1,4 @@
-FROM debian:buster-20220527-slim
+FROM debian:bookworm-20220527-slim
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update && apt-get install -y sudo jq libapache2-mod-fcgid apache2 procps nano libsodium-dev dnsutils iproute2 net-tools host sed grep default-mysql-server unzip zip wget lsb-release libsodium-dev libxslt1-dev build-essential libbz2-dev libfreetype6-dev libicu-dev libzip-dev libxslt-dev libtidy-dev libedit-dev libreadline-dev libonig-dev libjpeg-dev libpng-dev libcurl4-openssl-dev  libbz2-dev zlib1g zlib1g-dev sqlite3 libsqlite3-dev libssl-dev libxml2-dev pkg-config automake tree autotools-dev libtool build-essential curl git libedit-dev autoconf-archive
@@ -14,9 +14,9 @@ RUN echo 'eval "$(phpenv init -)"' >> /home/ampersand/.bashrc
 ENV PATH="/home/ampersand/.phpenv/shims:/home/ampersand/.phpenv/bin:$PATH"
 
 # PHP
-RUN PHP_BUILD_CONFIGURE_OPTS="--with-freetype --with-sodium" phpenv install 8.3.0  && phpenv global 8.3.0  && sed -i 's/memory_limit = 128M/memory_limit = 4096M/' /home/ampersand/.phpenv/versions/8.3.0/etc/php.ini && php --version
-RUN PHP_BUILD_CONFIGURE_OPTS="--with-freetype --with-sodium" phpenv install 8.2.2  && phpenv global 8.2.2  && sed -i 's/memory_limit = 128M/memory_limit = 4096M/' /home/ampersand/.phpenv/versions/8.2.2/etc/php.ini && php --version
-RUN PHP_BUILD_CONFIGURE_OPTS="--with-freetype --with-sodium" phpenv install 8.1.6  && phpenv global 8.1.6  && sed -i 's/memory_limit = 128M/memory_limit = 4096M/' /home/ampersand/.phpenv/versions/8.1.6/etc/php.ini && php --version
+RUN PHP_BUILD_CONFIGURE_OPTS="--with-freetype --with-sodium" phpenv install 8.3.21 && phpenv global 8.3.21 && sed -i 's/memory_limit = 128M/memory_limit = 4096M/' /home/ampersand/.phpenv/versions/8.3.21/etc/php.ini && php --version
+RUN PHP_BUILD_CONFIGURE_OPTS="--with-freetype --with-sodium" phpenv install 8.2.28  && phpenv global 8.2.28  && sed -i 's/memory_limit = 128M/memory_limit = 4096M/' /home/ampersand/.phpenv/versions/8.2.28/etc/php.ini && php --version
+RUN PHP_BUILD_CONFIGURE_OPTS="--with-freetype --with-sodium" phpenv install 8.1.32  && phpenv global 8.1.32  && sed -i 's/memory_limit = 128M/memory_limit = 4096M/' /home/ampersand/.phpenv/versions/8.1.32/etc/php.ini && php --version
 RUN PHP_BUILD_CONFIGURE_OPTS="--with-freetype" phpenv install 7.4.29 && phpenv global 7.4.29 && sed -i 's/memory_limit = 128M/memory_limit = 4096M/' /home/ampersand/.phpenv/versions/7.4.29/etc/php.ini && php --version
 RUN cd /home/ampersand/.phpenv/ && wget https://github.com/jedisct1/libsodium-php/archive/2.0.22.tar.gz && tar -xzf 2.0.22.tar.gz && cd libsodium-php-2.0.22/ && phpize && ./configure && make && echo 'extension=/home/ampersand/.phpenv/libsodium-php-2.0.22/modules/sodium.so' >> /home/ampersand/.phpenv/versions/7.4.29/etc/php.ini && php --modules | grep odium
 
