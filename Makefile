@@ -91,7 +91,7 @@ COMPOSER_AUTH_JSON_LOCATION ?= './Dockerfile-assets/auth.json'
 2-latest:			 # Launch the latest stable 2.x series
 	PHP_VERSION='8.3.21' COMPOSER_VERSION='composer2' MYSQL_VERSION="mysql:8.0.32-debian" ELASTICSEARCH_VERSION='docker.elastic.co/elasticsearch/elasticsearch:8.18.0' ELASTICSEARCH_OPTIONS='--search-engine elasticsearch8 --elasticsearch-host elasticsearch --elasticsearch-port 9200' MAGENTO_PORT=1234 CURRENT_EXTENSION=$(CURRENT_EXTENSION)  CURRENT_EXTENSION_VENDOR=$(CURRENT_EXTENSION_VENDOR) COMPOSER_AUTH_JSON_LOCATION=$(COMPOSER_AUTH_JSON_LOCATION) make docker-start
 
-docker-start:       # Launch docker container
+docker-start: # Launch docker container
 	docker compose --file=docker-compose.yml pull --quiet
 	docker compose --file=docker-compose.yml down --remove-orphans
 	docker container rm -f mtest-mysql mtest mtest-elasticsearch
