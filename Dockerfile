@@ -4,7 +4,7 @@ SHELL ["/bin/bash", "-c"]
 USER root
 RUN usermod -a -G www-data ampersand
 RUN echo 'ampersand ALL=(ALL) NOPASSWD:/usr/sbin/apachectl configtest, /usr/sbin/apachectl restart, /usr/sbin/apachectl start, /usr/sbin/apachectl stop' | tee -a /etc/sudoers.d/ampersand
-RUN apt-get install acl -y
+RUN apt-get -y update && apt-get install -y acl && apt-get clean
 RUN setfacl -m g:ampersand:rx /var/log/apache2 && setfacl -m g:ampersand:rx /var/log/apache2/*
 RUN rm /var/www/html/index.html && chown -R ampersand:www-data /var/www/html && chown ampersand:www-data /etc/apache2/sites-enabled/000-default.conf
 
