@@ -1,6 +1,11 @@
 services:
   - docker
 
+addons:
+  apt:
+    packages:
+      - docker-ce
+
 env:
   - TEST_GROUP=2-3-7      INTEGRATION=false
   - TEST_GROUP=2-3-7-p1   INTEGRATION=false
