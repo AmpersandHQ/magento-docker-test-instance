@@ -73,15 +73,15 @@ script:
   - shellcheck bin/*
   - shellcheck Dockerfile-assets/*.sh
   - if [[ $INTEGRATION = both ]];  then composer config --global --auth http-basic.repo.packagist.com token somefaketoken123; sudo chmod 644 ~/.config/composer/auth.json; fi
-  - if [[ $INTEGRATION = both ]];  then COMPOSER_AUTH_JSON_LOCATION=~/.config/composer/auth.json COMPOSER_AFTER_INSTALL_COMMAND='touch /tmp/travistest.txt;' CURRENT_EXTENSION="." FULL_INSTALL=1 travis_wait ./bin/mtest-make $TEST_GROUP; fi
+  - if [[ $INTEGRATION = both ]];  then COMPOSER_AUTH_JSON_LOCATION=~/.config/composer/auth.json COMPOSER_AFTER_INSTALL_COMMAND='touch /tmp/travistest.txt;' CURRENT_EXTENSION="." FULL_INSTALL=1 ./bin/mtest-make $TEST_GROUP; fi
   - if [[ $INTEGRATION = both ]];  then ./bin/mtest 'test -f /tmp/travistest.txt'; fi
   - if [[ $INTEGRATION = both ]];  then ./bin/mtest 'grep -C10 somefaketoken123 /home/ampersand/.composer/auth.json'; fi
-  - if [[ $INTEGRATION = false ]]; then FULL_INSTALL=1 travis_wait ./bin/mtest-make $TEST_GROUP; fi
+  - if [[ $INTEGRATION = false ]]; then FULL_INSTALL=1 ./bin/mtest-make $TEST_GROUP; fi
   - if [[ $INTEGRATION = false ]]; then curl --head http://0.0.0.0:1234 | grep 200; fi
   - if [[ $INTEGRATION = false ]]; then ./bin/mtest 'php bin/magento'; fi
   - if [[ $INTEGRATION = true ]]; then cd tests/Ampersand_HelloWorld; fi
   - if [[ $INTEGRATION = true ]]; then composer install --no-interaction -vvv; fi
-  - if [[ $INTEGRATION = true ]]; then CURRENT_EXTENSION="." travis_wait vendor/bin/mtest-make $TEST_GROUP ; fi
+  - if [[ $INTEGRATION = true ]]; then CURRENT_EXTENSION="." vendor/bin/mtest-make $TEST_GROUP ; fi
   - if [[ $INTEGRATION = true && $TEST_GROUP != 2-4-6* ]]; then vendor/bin/mtest 'cd dev/tests/unit && ../../../vendor/bin/phpunit -c phpunit.xml.dist --testsuite Unit --debug' ; fi
   - if [[ $INTEGRATION = true && $TEST_GROUP == 2-4-6* ]]; then vendor/bin/mtest 'vendor/bin/phpunit -c /var/www/html/dev/tests/unit/phpunit.xml.dist --testsuite Unit --debug' ; fi
   - if [[ $INTEGRATION = true ]]; then vendor/bin/mtest 'vendor/bin/phpunit -c /var/www/html/dev/tests/integration/phpunit.xml.dist --testsuite Integration --debug' ; fi

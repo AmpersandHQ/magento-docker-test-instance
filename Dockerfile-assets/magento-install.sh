@@ -14,6 +14,7 @@ TWOFACTOR_ENABLED=${TWOFACTOR_ENABLED:-0}
 ELASTICSEARCH_OPTIONS=${ELASTICSEARCH_OPTIONS:-}
 COMPOSER_REQUIRE_EXTRA=${COMPOSER_REQUIRE_EXTRA:-0}
 COMPOSER_AFTER_INSTALL_COMMAND=${COMPOSER_AFTER_INSTALL_COMMAND:-0}
+COMPOSER_LOCK=${COMPOSER_LOCK:-}
 INTEGRATION_TESTS_PATH=${INTEGRATION_TESTS_PATH:-'src/Test/Integration'}
 UNIT_TESTS_PATH=${UNIT_TESTS_PATH:-'src/Test/Unit'}
 
@@ -84,6 +85,12 @@ fi
 echo "Composer - installation"
 cat composer.json
 export COMPOSER_MEMORY_LIMIT=-1
+
+if [ -n "$COMPOSER_LOCK" ]; then
+  echo "Composer - Using $COMPOSER_LOCK"
+  cp /home/ampersand/assets/$COMPOSER_LOCK /var/www/html/composer.lock
+fi
+
 if composer install --no-interaction; then
   echo "COMPOSER_INSTALL_TRY_1=PASS"
 elif rm -rf vendor && composer install --no-interaction; then
