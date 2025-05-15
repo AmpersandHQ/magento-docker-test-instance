@@ -14,6 +14,7 @@ TWOFACTOR_ENABLED=${TWOFACTOR_ENABLED:-0}
 ELASTICSEARCH_OPTIONS=${ELASTICSEARCH_OPTIONS:-}
 COMPOSER_REQUIRE_EXTRA=${COMPOSER_REQUIRE_EXTRA:-0}
 COMPOSER_AFTER_INSTALL_COMMAND=${COMPOSER_AFTER_INSTALL_COMMAND:-0}
+COMPOSER_LOCK=${COMPOSER_LOCK:-}
 INTEGRATION_TESTS_PATH=${INTEGRATION_TESTS_PATH:-'src/Test/Integration'}
 UNIT_TESTS_PATH=${UNIT_TESTS_PATH:-'src/Test/Unit'}
 
@@ -84,6 +85,12 @@ fi
 echo "Composer - installation"
 cat composer.json
 export COMPOSER_MEMORY_LIMIT=-1
+
+if [ -n "$COMPOSER_LOCK" ]; then
+  echo "Composer - Using $COMPOSER_LOCK"
+  cp /home/ampersand/assets/"$COMPOSER_LOCK" /var/www/html/composer.lock
+fi
+
 if composer install --no-interaction; then
   echo "COMPOSER_INSTALL_TRY_1=PASS"
 elif rm -rf vendor && composer install --no-interaction; then
@@ -91,6 +98,11 @@ elif rm -rf vendor && composer install --no-interaction; then
 else
   echo "COMPOSER_INSTALL_TRY_2=FAIL"
   false
+fi
+
+# Apply https://experienceleague.adobe.com/en/docs/commerce-operations/tools/quality-patches-tool/patches-available-in-qpt/v1-1-50/acsd-59280-fix-for-reflection-union-type-error
+if [[ "$MAGE_VERSION" == 2.4.4* ]]; then
+  curl https://raw.githubusercontent.com/magento/quality-patches/refs/heads/master/patches/os/ACSD-59280_2.4.4-p6.patch | patch -p1
 fi
 
 if [ ! "$COMPOSER_AFTER_INSTALL_COMMAND" = "0" ]; then
@@ -153,6 +165,9 @@ if [ -f "/current_extension/composer.json" ]; then
   cp /home/ampersand/assets/install-config-mysql.php.dist dev/tests/integration/etc/install-config-mysql.php
   if [[ "$MAGE_VERSION" == 2.3* ]]; then
     cp /home/ampersand/assets/install-config-mysql-no-search.php.dist dev/tests/integration/etc/install-config-mysql.php
+  fi
+  if [[ "$MAGE_VERSION" == 2.4.8* ]]; then
+    cp /home/ampersand/assets/install-config-mysql-es8.php.dist dev/tests/integration/etc/install-config-mysql.php
   fi
   php /home/ampersand/assets/prepare-phpunit-config.php /var/www/html "$(composer config name -d /current_extension/)" "$INTEGRATION_TESTS_PATH" "$UNIT_TESTS_PATH"
   php bin/magento setup:di:compile

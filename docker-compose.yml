@@ -8,7 +8,7 @@ services:
     depends_on:
       - elasticsearch
       - mysql
-    image: ampco/magento-docker-test-instance:0.1.13
+    image: ampco/magento-docker-test-instance:0.2.0
     #uncomment the below and the --build in the Makefile to test changes locally
     #build:
     #  context: ./
@@ -43,6 +43,7 @@ services:
       - PHP_VERSION=$PHP_VERSION
       - TWOFACTOR_ENABLED=$TWOFACTOR_ENABLED
       - COMPOSER_VERSION=$COMPOSER_VERSION
+      - COMPOSER_LOCK=$COMPOSER_LOCK
       - COMPOSER_AFTER_INSTALL_COMMAND=$COMPOSER_AFTER_INSTALL_COMMAND
       - COMPOSER_REQUIRE_EXTRA=$COMPOSER_REQUIRE_EXTRA
       - COMPOSER_MODULE_SYMLINK=$COMPOSER_MODULE_SYMLINK
@@ -53,6 +54,7 @@ services:
     image: $ELASTICSEARCH_VERSION
     environment:
       - discovery.type=single-node
+      - xpack.security.enabled=false
   mysql:
     container_name: mtest-mysql
     image: $MYSQL_VERSION

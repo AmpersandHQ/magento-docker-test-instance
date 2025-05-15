@@ -1,3 +1,4 @@
+dist: noble
 services:
   - docker
 
@@ -28,8 +29,12 @@ env:
   - TEST_GROUP=2-4-6-p1   INTEGRATION=false
   - TEST_GROUP=2-4-6-p2   INTEGRATION=false
   - TEST_GROUP=2-4-6-p3   INTEGRATION=false
-  - TEST_GROUP=2-4-7-beta1   INTEGRATION=false
-  - TEST_GROUP=2-4-7-beta2   INTEGRATION=false
+  - TEST_GROUP=2-4-7      INTEGRATION=false
+  - TEST_GROUP=2-4-7-p1   INTEGRATION=false
+  - TEST_GROUP=2-4-7-p2   INTEGRATION=false
+  - TEST_GROUP=2-4-7-p3   INTEGRATION=false
+  - TEST_GROUP=2-4-7-p4   INTEGRATION=false
+  - TEST_GROUP=2-4-7-p5   INTEGRATION=false
   - TEST_GROUP=2-latest   INTEGRATION=false
   - TEST_GROUP=2-3-7      INTEGRATION=true
   - TEST_GROUP=2-3-7-p1   INTEGRATION=true
@@ -57,13 +62,17 @@ env:
   - TEST_GROUP=2-4-6-p1   INTEGRATION=true
   - TEST_GROUP=2-4-6-p2   INTEGRATION=true
   - TEST_GROUP=2-4-6-p3   INTEGRATION=true
-  - TEST_GROUP=2-4-7-beta1   INTEGRATION=true
-  - TEST_GROUP=2-4-7-beta2   INTEGRATION=true
+  - TEST_GROUP=2-4-7      INTEGRATION=true
+  - TEST_GROUP=2-4-7-p1   INTEGRATION=true
+  - TEST_GROUP=2-4-7-p2   INTEGRATION=true
+  - TEST_GROUP=2-4-7-p3   INTEGRATION=true
+  - TEST_GROUP=2-4-7-p4   INTEGRATION=true
+  - TEST_GROUP=2-4-7-p5   INTEGRATION=true
   - TEST_GROUP=2-latest   INTEGRATION=true
   - TEST_GROUP=2-latest   INTEGRATION=both
 
 before_install:
-  - travis_retry wget https://github.com/docker/compose/releases/download/v2.17.0/docker-compose-linux-x86_64
+  - travis_retry wget https://github.com/docker/compose/releases/download/v2.36.0/docker-compose-linux-x86_64
   - sudo mv docker-compose-linux-x86_64 /usr/libexec/docker/cli-plugins/docker-compose
   - sudo chmod +x /usr/libexec/docker/cli-plugins/docker-compose
   - docker --version && docker compose version
@@ -81,7 +90,8 @@ script:
   - if [[ $INTEGRATION = true ]]; then cd tests/Ampersand_HelloWorld; fi
   - if [[ $INTEGRATION = true ]]; then composer install --no-interaction -vvv; fi
   - if [[ $INTEGRATION = true ]]; then CURRENT_EXTENSION="." vendor/bin/mtest-make $TEST_GROUP ; fi
-  - if [[ $INTEGRATION = true ]]; then vendor/bin/mtest 'vendor/bin/phpunit -c /var/www/html/dev/tests/unit/phpunit.xml.dist        --testsuite Unit --debug' ; fi
+  - if [[ $INTEGRATION = true && $TEST_GROUP != 2-4-6* ]]; then vendor/bin/mtest 'cd dev/tests/unit && ../../../vendor/bin/phpunit -c phpunit.xml.dist --testsuite Unit --debug' ; fi
+  - if [[ $INTEGRATION = true && $TEST_GROUP == 2-4-6* ]]; then vendor/bin/mtest 'vendor/bin/phpunit -c /var/www/html/dev/tests/unit/phpunit.xml.dist --testsuite Unit --debug' ; fi
   - if [[ $INTEGRATION = true ]]; then vendor/bin/mtest 'vendor/bin/phpunit -c /var/www/html/dev/tests/integration/phpunit.xml.dist --testsuite Integration --debug' ; fi
 
 after_failure:

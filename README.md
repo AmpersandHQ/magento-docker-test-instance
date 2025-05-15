@@ -13,6 +13,7 @@ Features
 We try to keep these installations as vanilla and untouched as possible. However, there are a few caveats
 - This is for test use only, not for production or any deployed environment. This uses https://repo-magento-mirror.fooman.co.nz/ to pull in Magento which should not be used for production.
 - 2FA modules are disabled by default to allow easier admin access
+- Alpha and beta versions won't be supported due to their instability
 
 # Usage 
 
