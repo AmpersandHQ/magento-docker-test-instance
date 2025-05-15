@@ -88,7 +88,7 @@ export COMPOSER_MEMORY_LIMIT=-1
 
 if [ -n "$COMPOSER_LOCK" ]; then
   echo "Composer - Using $COMPOSER_LOCK"
-  cp /home/ampersand/assets/$COMPOSER_LOCK /var/www/html/composer.lock
+  cp /home/ampersand/assets/"$COMPOSER_LOCK" /var/www/html/composer.lock
 fi
 
 if composer install --no-interaction; then
