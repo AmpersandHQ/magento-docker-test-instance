@@ -82,15 +82,6 @@ COMPOSER_AUTH_JSON_LOCATION ?= './Dockerfile-assets/auth.json'
 2-4-6-p3:		# Launch 2.4.6-p3
 	MAGE_VERSION="2.4.6-p3" PHP_VERSION='8.2.28' COMPOSER_VERSION='composer22' MYSQL_VERSION="mysql:8.0.32-debian" ELASTICSEARCH_VERSION='docker.elastic.co/elasticsearch/elasticsearch:7.17.0' ELASTICSEARCH_OPTIONS='--search-engine elasticsearch7 --elasticsearch-host elasticsearch --elasticsearch-port 9200' MAGENTO_PORT=1234 CURRENT_EXTENSION=$(CURRENT_EXTENSION)  CURRENT_EXTENSION_VENDOR=$(CURRENT_EXTENSION_VENDOR) COMPOSER_AUTH_JSON_LOCATION=$(COMPOSER_AUTH_JSON_LOCATION) make docker-start
 
-2-4-7-beta1:	# Launch 2.4.7-beta1
-	MAGE_VERSION="2.4.7-beta1" PHP_VERSION='8.2.28' COMPOSER_VERSION='composer2' MYSQL_VERSION="mysql:8.0.32-debian" ELASTICSEARCH_VERSION='docker.elastic.co/elasticsearch/elasticsearch:7.17.0' ELASTICSEARCH_OPTIONS='--search-engine elasticsearch7 --elasticsearch-host elasticsearch --elasticsearch-port 9200' MAGENTO_PORT=1234 CURRENT_EXTENSION=$(CURRENT_EXTENSION)  CURRENT_EXTENSION_VENDOR=$(CURRENT_EXTENSION_VENDOR) COMPOSER_AUTH_JSON_LOCATION=$(COMPOSER_AUTH_JSON_LOCATION) make docker-start
-
-2-4-7-beta2:	# Launch 2.4.7-beta2
-	MAGE_VERSION="2.4.7-beta2" PHP_VERSION='8.2.28' COMPOSER_VERSION='composer2' MYSQL_VERSION="mysql:8.0.32-debian" ELASTICSEARCH_VERSION='docker.elastic.co/elasticsearch/elasticsearch:7.17.0' ELASTICSEARCH_OPTIONS='--search-engine elasticsearch7 --elasticsearch-host elasticsearch --elasticsearch-port 9200' MAGENTO_PORT=1234 CURRENT_EXTENSION=$(CURRENT_EXTENSION)  CURRENT_EXTENSION_VENDOR=$(CURRENT_EXTENSION_VENDOR) COMPOSER_AUTH_JSON_LOCATION=$(COMPOSER_AUTH_JSON_LOCATION) make docker-start
-
-2-4-7-beta3:	# Launch 2.4.7-beta3
-	MAGE_VERSION="2.4.7-beta3" PHP_VERSION='8.2.28' COMPOSER_VERSION='composer2' MYSQL_VERSION="mysql:8.0.32-debian" ELASTICSEARCH_VERSION='docker.elastic.co/elasticsearch/elasticsearch:7.17.0' ELASTICSEARCH_OPTIONS='--search-engine elasticsearch7 --elasticsearch-host elasticsearch --elasticsearch-port 9200' MAGENTO_PORT=1234 CURRENT_EXTENSION=$(CURRENT_EXTENSION)  CURRENT_EXTENSION_VENDOR=$(CURRENT_EXTENSION_VENDOR) COMPOSER_AUTH_JSON_LOCATION=$(COMPOSER_AUTH_JSON_LOCATION) make docker-start
-
 2-4-7:	# Launch 2.4.7
 	MAGE_VERSION="2.4.7" PHP_VERSION='8.2.28' COMPOSER_VERSION='composer2' MYSQL_VERSION="mysql:8.0.32-debian" ELASTICSEARCH_VERSION='docker.elastic.co/elasticsearch/elasticsearch:7.17.0' ELASTICSEARCH_OPTIONS='--search-engine elasticsearch7 --elasticsearch-host elasticsearch --elasticsearch-port 9200' MAGENTO_PORT=1234 CURRENT_EXTENSION=$(CURRENT_EXTENSION)  CURRENT_EXTENSION_VENDOR=$(CURRENT_EXTENSION_VENDOR) COMPOSER_AUTH_JSON_LOCATION=$(COMPOSER_AUTH_JSON_LOCATION) make docker-start
 
@@ -108,12 +99,6 @@ COMPOSER_AUTH_JSON_LOCATION ?= './Dockerfile-assets/auth.json'
 
 2-4-7-p5:	# Launch 2.4.7-p5
 	MAGE_VERSION="2.4.7-p5" PHP_VERSION='8.2.28' COMPOSER_VERSION='composer2' MYSQL_VERSION="mysql:8.0.32-debian" ELASTICSEARCH_VERSION='docker.elastic.co/elasticsearch/elasticsearch:7.17.0' ELASTICSEARCH_OPTIONS='--search-engine elasticsearch7 --elasticsearch-host elasticsearch --elasticsearch-port 9200' MAGENTO_PORT=1234 CURRENT_EXTENSION=$(CURRENT_EXTENSION)  CURRENT_EXTENSION_VENDOR=$(CURRENT_EXTENSION_VENDOR) COMPOSER_AUTH_JSON_LOCATION=$(COMPOSER_AUTH_JSON_LOCATION) make docker-start
-
-2-4-8-beta1:	# Launch 2.4.7-beta1
-	MAGE_VERSION="2.4.8-beta1" PHP_VERSION='8.3.21' COMPOSER_VERSION='composer2' MYSQL_VERSION="mysql:8.0.32-debian" ELASTICSEARCH_VERSION='docker.elastic.co/elasticsearch/elasticsearch:8.18.0' ELASTICSEARCH_OPTIONS='--search-engine elasticsearch8 --elasticsearch-host elasticsearch --elasticsearch-port 9200' MAGENTO_PORT=1234 CURRENT_EXTENSION=$(CURRENT_EXTENSION)  CURRENT_EXTENSION_VENDOR=$(CURRENT_EXTENSION_VENDOR) COMPOSER_AUTH_JSON_LOCATION=$(COMPOSER_AUTH_JSON_LOCATION) make docker-start
-
-2-4-8-beta2:	# Launch 2.4.7-beta2
-	MAGE_VERSION="2.4.8-beta2" PHP_VERSION='8.3.21' COMPOSER_VERSION='composer2' MYSQL_VERSION="mysql:8.0.32-debian" ELASTICSEARCH_VERSION='docker.elastic.co/elasticsearch/elasticsearch:8.18.0' ELASTICSEARCH_OPTIONS='--search-engine elasticsearch8 --elasticsearch-host elasticsearch --elasticsearch-port 9200' MAGENTO_PORT=1234 CURRENT_EXTENSION=$(CURRENT_EXTENSION)  CURRENT_EXTENSION_VENDOR=$(CURRENT_EXTENSION_VENDOR) COMPOSER_AUTH_JSON_LOCATION=$(COMPOSER_AUTH_JSON_LOCATION) make docker-start
 
 2-latest:			 # Launch the latest stable 2.x series
 	PHP_VERSION='8.3.21' COMPOSER_VERSION='composer2' MYSQL_VERSION="mysql:8.0.32-debian" ELASTICSEARCH_VERSION='docker.elastic.co/elasticsearch/elasticsearch:8.18.0' ELASTICSEARCH_OPTIONS='--search-engine elasticsearch8 --elasticsearch-host elasticsearch --elasticsearch-port 9200' MAGENTO_PORT=1234 CURRENT_EXTENSION=$(CURRENT_EXTENSION)  CURRENT_EXTENSION_VENDOR=$(CURRENT_EXTENSION_VENDOR) COMPOSER_AUTH_JSON_LOCATION=$(COMPOSER_AUTH_JSON_LOCATION) make docker-start
